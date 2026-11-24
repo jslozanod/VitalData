@@ -1,0 +1,10 @@
+[project]
+name = "vitaldata"
+version = "1.0.0"
+description = "Pronostico de llegadas a urgencias y recomendacion de personal, con datos abiertos de Colombia"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+markers = ["integration: necesita PostgreSQL en marcha (docker compose up -d db)"]
