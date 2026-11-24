@@ -4,7 +4,7 @@ Pronóstico de llegadas a urgencias, personal recomendado y orientación al paci
 
 Proyecto de Data Thinking, Universidad Autónoma de Occidente, 2026. Lo hicimos Sebastian Lozano y Julian David Cuellar.
 
-![Tablero del coordinador](web/assets/proto/pf.png)
+![Sitio para pacientes de VitalData](docs/capturas/sitio_inicio.png)
 
 ## Qué hace
 
@@ -23,6 +23,16 @@ Las urgencias se planean por turnos, pero la gente llega por horas. Con las aten
 
    Son reglas de orientación, no un diagnóstico, y siempre lo avisa. Las agendas son del propio VitalData: en un piloto se conectarían con la agenda del hospital.
 2. **Panel para hospitales** (`/panel.html`). Para quien coordina urgencias: elige un centro y un día y ve cuántos pacientes se pronosticaron hora por hora (con rango probable), cuántos llegaron de verdad y cuántas personas hacían falta para cumplir su meta de espera. Puede cambiar los minutos por paciente, la dotación y probar escenarios de lluvia, temperatura y demanda, y descargar el plan del día en CSV. Incluye también el análisis de la demanda: cuando llegan más pacientes en una hora, la espera sube (correlación de Spearman entre 0,23 y 0,37, con prueba de permutación), y los casos de triage IV y V esperan una mediana de 79 a 82 minutos, frente a 37 en triage III.
+
+## Así se ve
+
+| Reserva de citas | Panel para hospitales |
+| --- | --- |
+| ![Reserva de citas con calendario y horarios](docs/capturas/reserva.png) | ![Panel para hospitales](docs/capturas/panel_hospitales.png) |
+
+| Sección para hospitales | ¿Es urgente? y primeros auxilios |
+| --- | --- |
+| ![Sección para hospitales con simulador de ahorro](docs/capturas/hospitales.png) | ![Verificador de urgencias y primeros auxilios](docs/capturas/urgente.png) |
 
 ## Cómo correrlo
 
