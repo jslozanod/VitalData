@@ -29,8 +29,8 @@ Las urgencias se planean por turnos, pero la gente llega por horas. Con las aten
 Necesitamos Docker Desktop, Python 3.12 o superior y Git.
 
 ```bash
-git clone <dirección del repositorio>
-cd vitaldata-repo
+git clone https://github.com/jslozanod/VitalData.git
+cd VitalData
 cp .env.example .env          # cambia las dos contraseñas
 docker compose up -d db       # PostgreSQL 16
 ```
