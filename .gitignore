@@ -20,3 +20,6 @@ docs/presentacion/img/rev_*.png
 docs/presentacion/img/v_*.png
 *.pyc
 .vscode/
+
+# guiones de preparación de la sustentación (uso interno del equipo)
+docs/sustentacion/
