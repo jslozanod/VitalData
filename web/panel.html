@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VitalData · Panel para hospitales</title>
+<meta name="description" content="Pronóstico de llegadas a urgencias, personal recomendado y orientación al paciente, con datos abiertos de la E.S.E. Pasto Salud y del IDEAM.">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('vd_tema')||'dark'}catch(e){document.documentElement.dataset.theme='dark'}</script>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip" href="#contenido">Saltar al contenido</a>
+
+</head>
+<body class="app">
+<a class="skip" href="#contenido">Saltar al contenido</a>
+<div class="urgente" role="note"><b>¿Es una emergencia?</b> Llama al <b>123</b> o ve a la urgencia más cercana. Esta herramienta orienta; no reemplaza una valoración médica.</div>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="VitalData, sitio para pacientes"><img src="assets/logo.svg" width="34" height="34" alt="">VitalData</a>
+    <a class="volver" href="./">← Sitio para pacientes</a>
+    <nav class="menu tabs" aria-label="Vistas">
+      <a href="#demo">Tablero del día</a><a href="#analisis">Análisis</a>
+    </nav>
+    <span id="modo" class="modo" title="De dónde salen los datos">…</span>
+  </div>
+</header>
+<div class="resumen-app"><div class="wrap">
+  <div class="cifras compactas" id="cifras" aria-live="polite">
+    <div class="cifra"><b data-k="atenciones">–</b><span>atenciones reales analizadas</span></div>
+    <div class="cifra"><b data-k="ips">–</b><span>centros de salud de Pasto</span></div>
+    <div class="cifra"><b data-k="mediana">–</b><span>min de espera, la mitad de los pacientes</span></div>
+    <div class="cifra"><b data-k="p90">–</b><span>min, uno de cada diez espera más</span></div>
+  </div>
+</div></div>
+<main id="contenido">
+
+<!-- ===================== COORDINADOR ===================== -->
+<section id="demo" class="vista">
+  <div class="wrap">
+    <div class="hdr revelar"><div class="eyebrow">Tablero del coordinador</div><h2>Cuántos van a llegar y cuánto personal hace falta</h2>
+      <p class="lead">Elige el centro y el día: verás cuántos pacientes se esperan cada hora y cuánto personal hace falta.</p>
+      <p class="nota">Los datos de la fuente llegan hasta septiembre de 2022; los días disponibles son los que el modelo no vio al entrenar.</p></div>
+    <div class="guia" data-guia="demo" role="note"><div class="guia-t">Así se usa el tablero en 3 pasos</div><ol><li><b>Elige</b> el centro y el día. También puedes pulsar «Recorrer los días».</li><li><b>Ajusta</b> los minutos por paciente, la espera objetivo y las personas que tienes. Todo se recalcula solo.</li><li><b>Lee</b> el resumen y las horas en rojo. Si quieres, descarga el plan del día.</li></ol><button type="button" class="guia-x">Entendido</button></div>
+    <div class="panel">
+      <aside class="card tint ctrl revelar" aria-label="Controles del tablero">
+        <label for="d-ips">Centro de salud</label><select id="d-ips"></select>
+        <label for="d-fecha">Día <output id="o-fecha"></output></label><input type="range" id="d-fecha" min="0" max="0" value="0">
+        <div class="cta" style="margin-top:8px"><button class="btn small ghost" id="d-play" type="button">▶ Recorrer los días</button></div>
+        <p class="help">El día se pronostica con lo que se sabía hasta las 00:00 de ese día.</p>
+        <label for="d-serv">Atención por paciente <output id="o-serv"></output></label><input type="range" id="d-serv" min="10" max="90" step="5" value="30">
+        <p class="help">Minutos que una persona del equipo dedica a cada paciente. Con más tiempo, hace falta más personal.</p>
+        <label for="d-meta">Espera objetivo <output id="o-meta"></output></label><input type="range" id="d-meta" min="5" max="60" step="5" value="15">
+        <p class="help">Espera media máxima que acepta el hospital. Con una meta más estricta, el modelo pide más personal.</p>
+        <label for="d-dot">Dotación actual <output id="o-dot"></output></label><input type="range" id="d-dot" min="1" max="12" step="1" value="3">
+        <p class="help">Personas que hoy atienden a la vez. Se compara con el personal necesario.</p>
+        <details style="margin-top:16px"><summary style="cursor:pointer;font-weight:700">¿Y si cambia el clima o la demanda?</summary>
+          <label for="d-lluvia">Lluvia del día <output id="o-lluvia"></output></label><input type="range" id="d-lluvia" min="0" max="40" step="1" value="0">
+          <label for="d-temp">Temperatura media <output id="o-temp"></output></label><input type="range" id="d-temp" min="6" max="24" step="1" value="15">
+          <label for="d-nivel">Demanda reciente <output id="o-nivel"></output></label><input type="range" id="d-nivel" min="70" max="200" step="5" value="100">
+          <p class="help" id="d-esc-ayuda">Usa el modelo del servidor. Cambia cualquiera de los tres y la curva morada muestra el escenario.</p>
+        </details>
+      </aside>
+      <div class="revelar">
+        <div class="acciones"><button type="button" class="btn small ghost" id="d-csv">Descargar plan del día (CSV)</button><button type="button" class="btn small ghost" id="d-print">Imprimir</button></div>
+        <div class="resumen-dia" id="d-resumen" aria-live="polite"></div>
+        <div class="kpis" id="d-kpis" aria-live="polite"></div>
+        <div class="card"><h3>Pacientes por hora</h3><p class="sub" id="d-sub"></p>
+          <div class="legend"><span><i style="background:var(--coral)"></i>Pronóstico</span><span><i style="background:var(--band);height:10px"></i>Rango probable (80 %)</span><span><i style="background:var(--ink)"></i>Lo que ocurrió</span><span><i style="background:var(--mute)"></i>Referencia sin IA</span><span id="lg-esc" hidden><i style="background:#8A4FD4"></i>Escenario</span></div>
+          <div id="d-chart" class="chart"></div></div>
+        <div class="card" style="margin-top:18px"><h3>Personal necesario frente a la dotación</h3><p class="sub" id="d-sub2"></p><div id="d-staff" class="chart"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PACIENTE ===================== -->
+
+
+<!-- ===================== HALLAZGO ===================== -->
+<section id="analisis" class="vista" hidden>
+  <div class="wrap">
+    <div class="hdr revelar"><div class="eyebrow">Análisis de la demanda</div><h2>Cuando llegan más, se espera más</h2>
+      <p class="lead">Nuestra hipótesis era que la congestión de la hora se nota en la espera. Con datos reales se puede comprobar, y con una prueba que no depende de nosotros.</p></div>
+    <div class="guia" data-guia="analisis" role="note"><div class="guia-t">Cómo leer esta pantalla</div><ol><li><b>Elige</b> un centro con los botones.</li><li><b>Mira</b> cómo sube la espera cuando llegan más pacientes en la hora.</li><li><b>Revisa</b> la tabla por triage: los casos leves esperan más.</li></ol><button type="button" class="guia-x">Entendido</button></div>
+    <div class="grid g2">
+      <div class="card revelar">
+        <div class="seg" id="sel-ips-espera" role="group" aria-label="Centro de salud" style="margin-bottom:10px"></div>
+        <div id="curva" class="chart"></div>
+        <p class="nota" id="curva-nota"></p>
+      </div>
+      <div class="card revelar">
+        <h3>Cómo leerlo</h3>
+        <p>Cada punto es la espera media de las horas en las que llegó ese número de personas. La barra es el intervalo de confianza del 95 %.</p>
+        <p id="curva-lectura"></p>
+        <h3 style="margin-top:18px">Qué no decimos</h3>
+        <p class="sub">La relación existe, pero es moderada: la espera también depende del triage de cada paciente y del personal que había, y la fuente no trae el personal por turno. Por eso recomendamos personal con una meta de espera que define quien usa la herramienta, no con una calibración que los datos no permiten.</p>
+        <div id="triage-esp"></div>
+      </div>
+    </div>
+    <div class="card revelar" style="margin-top:20px">
+      <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:end">
+        <div><h3>Lo que descubrimos al mirar las series</h3><p class="sub">Llegadas por día. Dos cosas rompen cualquier patrón y las tuvimos en cuenta.</p></div>
+        <div class="seg" id="sel-ips-serie" role="group" aria-label="Centro de salud"></div>
+      </div>
+      <div id="serie" class="chart"></div>
+      <div class="grid g2" style="margin-top:8px">
+        <p class="nota"><b>Un hueco de un año.</b> De abril de 2020 a marzo de 2021 la fuente no trae registros, por eso entrenamos solo con el periodo continuo desde abril de 2021.</p>
+        <p class="nota"><b>Un salto en mayo de 2022.</b> Desde ese mes las llegadas casi se duplican. Por eso el modelo usa el nivel de la última semana, no un promedio de toda la historia.</p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+<footer>
+  <div class="wrap">
+    <p><b>VitalData</b> · Proyecto de Data Thinking, Universidad Autónoma de Occidente, 2026. <a href="./">Sitio para pacientes</a> · <a href="proyecto.html">Documentación técnica</a> · <a href="proyecto.html#usuarios">Danos tu opinión</a></p>
+    <p>Fuentes: E.S.E. Pasto Salud (Clasificación en triage de urgencias, datos.gov.co vt5n-eu2r) e IDEAM (precipitación y temperatura). Prototipo académico: no reemplaza una valoración médica.</p>
+  </div>
+</footer>
+<script src="data/snapshot.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/api.js"></script>
+<script src="js/diagramas.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+/* Sitio para pacientes: estilo sobrio de portal de salud (verde azulado, mucho aire, titulares claros). */
+body.publico{--head:var(--body);--hero:#0A3D3B;--lima:#8FD14F;background:var(--paper);font-size:17px}
+:root[data-theme=dark] body.publico{--hero:#0A2A2A}
+body.publico h1,body.publico h2,body.publico h3{font-family:var(--body);font-weight:700;letter-spacing:-.01em}
+
+/* encabezado */
+header.sitio{background:var(--hero);color:#fff;position:sticky;top:0;z-index:50}
+header.sitio .wrap{display:flex;align-items:center;gap:24px;height:68px}
+.marca{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-weight:700;font-size:1.2rem}
+.principal{display:flex;gap:2px;margin-left:auto}
+.principal a{color:#E3F1EE;text-decoration:none;font-weight:600;font-size:.94rem;padding:10px 13px;border-radius:8px;white-space:nowrap}
+.principal a:hover{background:rgba(255,255,255,.13)}
+header.sitio .tema{background:transparent;color:#fff;border-color:rgba(255,255,255,.45)}
+header.sitio .tema:hover{border-color:#fff}
+@media(max-width:940px){
+  header.sitio .wrap{flex-wrap:wrap;height:auto;padding-top:10px;padding-bottom:10px;gap:6px 14px}
+  .principal{order:3;width:100%;margin:0;overflow-x:auto;scrollbar-width:none}
+  header.sitio .tema{margin-left:auto}
+}
+
+/* portada */
+.portada{background:var(--hero);color:#fff;padding:52px 0 68px}
+.portada-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:52px;align-items:center}
+@media(max-width:960px){.portada-grid{grid-template-columns:1fr;gap:36px}}
+.sobretitulo{text-transform:uppercase;letter-spacing:.14em;font-size:.78rem;font-weight:700;color:#9FE3D2;margin:0 0 12px}
+.portada h1{color:#fff;font-size:clamp(2.1rem,4.4vw,3.2rem);line-height:1.1;margin:0 0 16px}
+.bajada{color:#D3E8E4;font-size:1.12rem;max-width:560px;margin:0 0 26px}
+.buscador{display:flex;background:#fff;border-radius:12px;overflow:hidden;max-width:580px;box-shadow:0 8px 24px rgba(0,0,0,.22)}
+.buscador input{flex:1;min-width:0;border:0;border-radius:0;padding:17px 18px;font-size:1rem;background:#fff;color:#14282A}
+.buscador input::placeholder{color:#6E7F80}
+.buscador button{border:0;background:var(--lima);color:#0A3D3B;font:700 1rem var(--body);padding:0 24px;cursor:pointer}
+.buscador button:hover{filter:brightness(1.06)}
+.temas{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 18px;max-width:600px}
+.temas button{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:7px 14px;font:600 .88rem var(--body);cursor:pointer}
+.temas button:hover{background:rgba(255,255,255,.14);border-color:#fff}
+.aviso-peq{font-size:.84rem;color:#A8CFC9;margin:0}
+.portada-chat .phone{width:380px;max-width:100%;margin:0 auto}
+.portada-chat .screen{height:660px}
+@media(max-width:560px){.portada-chat .screen{height:600px}}
+
+/* burbujas del asistente con listas */
+.bub b{font-weight:700}
+.bub ul{margin:6px 0 0;padding-left:1.1rem}
+.bub li{margin:3px 0}
+.bub .pie-b{display:block;margin-top:8px;font-size:.8rem;color:var(--gray)}
+.bub.lista{max-width:94%}
+.bub.lista .t{display:block;font-weight:700;margin-bottom:2px}
+.bub.alert ul{color:inherit;font-weight:600}
+.puntos{letter-spacing:2px;color:var(--gray)}
+
+/* bloques */
+.bloque{padding:68px 0}
+.bloque.alt{background:var(--card);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+.titulo-bloque h2{font-size:clamp(1.6rem,3vw,2.15rem);margin:0 0 10px}
+.titulo-bloque p{color:var(--gray);max-width:700px;margin:0}
+.donde{display:grid;grid-template-columns:340px 1fr;gap:28px;margin-top:30px;align-items:start}
+@media(max-width:860px){.donde{grid-template-columns:1fr}}
+.donde-controles,.donde-resultado{background:var(--card);border:1px solid var(--hair);border-radius:14px;padding:24px}
+.campo{margin-bottom:20px}
+.etiqueta{display:block;font-weight:700;font-size:.8rem;color:var(--gray);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px}
+.recomendado{background:var(--acento-t);border-radius:12px;padding:16px 18px;margin-bottom:18px;font-size:1.05rem;line-height:1.5}
+.recomendado b{color:var(--acento-d)}
+.mejores{margin-top:20px;padding-top:16px;border-top:1px solid var(--hair)}
+.mejores h3{font-size:1rem;margin:0 0 8px}
+.mejores ul{margin:0;padding-left:1.1rem}
+.mejores li{margin:3px 0}
+.alarmas{list-style:none;padding:0;margin:30px 0 0;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:860px){.alarmas{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.alarmas{grid-template-columns:1fr}}
+.alarmas li{background:var(--paper);border:1px solid var(--hair);border-radius:12px;padding:18px 20px}
+.alarmas b{display:block;color:#B3261E;margin-bottom:4px}
+:root[data-theme=dark] .alarmas b{color:#FF8A80}
+.alarmas span{color:var(--gray);font-size:.95rem}
+.pasos-sitio{list-style:none;counter-reset:s;padding:0;margin:30px 0 36px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:760px){.pasos-sitio{grid-template-columns:1fr}}
+.pasos-sitio li{counter-increment:s;padding:22px;background:var(--card);border:1px solid var(--hair);border-radius:12px}
+.pasos-sitio li::before{content:counter(s);display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--acento);color:#fff;font-weight:700;margin-bottom:12px}
+.pasos-sitio b{display:block;margin-bottom:4px}
+.pasos-sitio span{color:var(--gray);font-size:.96rem}
+.aparte{display:flex;gap:24px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:var(--panel);border-radius:14px;padding:24px 28px}
+.aparte h3{margin:0 0 4px;font-size:1.15rem}
+.aparte p{margin:0;color:var(--gray);max-width:560px}
+.boton-sec{background:var(--acento);color:#fff;border-radius:10px;padding:13px 22px;font-weight:700;text-decoration:none;white-space:nowrap}
+.boton-sec:hover{filter:brightness(1.1)}
+footer.pie{background:var(--hero);color:#CFE3DF;padding:38px 0;font-size:.9rem}
+footer.pie a{color:#9FE3D2}
+footer.pie p{margin:0 0 8px;max-width:900px}
+@media print{header.sitio,.portada,footer.pie{display:none}}
+.portada-chat .screen{color:var(--ink)}
+.portada-chat .bub.bot,.portada-chat .rank{color:var(--ink)}
+.portada-chat .bub.alert{color:var(--coral-d)}
+:root[data-theme=light] .portada-chat .bub.alert{color:#9C241C}
+.portada-grid>*{min-width:0}
+.buscador{width:100%}
+@media(max-width:560px){.buscador button{padding:0 16px}.portada{padding-top:32px}}

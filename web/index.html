@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VitalData · Orientación y citas en urgencias</title>
+<meta name="description" content="Cuéntanos cómo te sientes: te decimos qué puedes hacer en casa, cuándo consultar, a qué centro de salud de Pasto ir según la espera y reserva tu cita en línea.">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('vd_tema')||'light'}catch(e){document.documentElement.dataset.theme='light'}</script>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/publico.css">
+<link rel="stylesheet" href="css/sitio.css">
+<link rel="stylesheet" href="css/hospitales.css">
+</head>
+<body class="publico">
+<a class="skip" href="#contenido">Saltar al contenido</a>
+
+<div class="urgente" role="note"><b>¿Es una emergencia?</b> Llama al <b>123</b> o ve a la urgencia más cercana. Esta herramienta orienta; no reemplaza una valoración médica.</div>
+
+<header class="sitio">
+  <div class="wrap">
+    <a class="marca" href="./" aria-label="VitalData, inicio"><img src="assets/logo.svg" width="36" height="36" alt=""><span>VitalData</span></a>
+    <nav class="principal" aria-label="Secciones">
+      <a href="#orientacion">Orientación</a>
+      <a href="#donde-ir">¿A dónde ir?</a>
+      <a href="#reservar">Reservar cita</a>
+      <a href="#urgente">¿Es urgente?</a>
+      <a href="#opiniones">Opiniones</a>
+      <a href="#hospitales">Para hospitales</a>
+    </nav>
+    <button type="button" class="tema" id="btn-tema">Modo oscuro</button>
+  </div>
+</header>
+
+<main id="contenido">
+
+<!-- ========================= ORIENTACION ========================= -->
+<section class="portada" id="orientacion">
+  <div class="wrap portada-grid">
+    <div class="portada-texto">
+      <p class="sobretitulo">Centros de salud de Pasto</p>
+      <h1>¿En qué te podemos orientar hoy?</h1>
+      <p class="bajada">Cuéntanos cómo te sientes. Te decimos qué puedes hacer en casa, cuándo conviene consultar, a qué centro ir según la espera de cada uno y puedes reservar tu cita aquí mismo.</p>
+      <form class="buscador" id="form-hero" role="search">
+        <label class="sr" for="hero-in">Escribe cómo te sientes</label>
+        <input id="hero-in" type="text" maxlength="400" autocomplete="off" placeholder="Por ejemplo: tengo fiebre y dolor de garganta">
+        <button type="submit">Preguntar</button>
+      </form>
+      <div class="temas" id="temas" aria-label="Temas frecuentes"></div>
+      <div class="cifras-sitio" aria-label="Lo que cubre el asistente">
+        <div><b id="n-temas">90+</b><span>temas de salud</span></div>
+        <div><b id="n-esp">15</b><span>especialidades</span></div>
+        <div><b>3</b><span>centros de Pasto</span></div>
+      </div>
+      <p class="aviso-peq">Orientación general de autocuidado. No reemplaza la consulta con un médico.</p>
+    </div>
+    <div class="portada-chat">
+      <div class="phone"><div class="screen">
+        <div class="chead"><img src="assets/logo.svg" width="30" height="30" alt=""><div><b>Asistente VitalData</b><small>Responde en segundos</small></div></div>
+        <div class="disc">Orientación general · no reemplaza una valoración médica · Emergencias: <b>123</b></div>
+        <div class="msgs" id="msgs" aria-live="polite"></div>
+        <form class="cin" id="chat-form"><label class="sr" for="chat-in">Escribe cómo te sientes</label><input id="chat-in" type="text" placeholder="Escribe cómo te sientes…" autocomplete="off" maxlength="400"><button type="submit">Enviar</button></form>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= DONDE IR ========================= -->
+<section class="bloque" id="donde-ir">
+  <div class="wrap">
+    <div class="titulo-bloque">
+      <h2>¿A dónde te conviene ir?</h2>
+      <p>Elige el día y la hora en que piensas ir. Te mostramos qué centro suele tener menos espera y cuáles son los mejores momentos del día: mañana, tarde o noche.</p>
+    </div>
+    <div class="donde">
+      <div class="donde-controles">
+        <div class="campo"><span class="etiqueta" id="l-dia">Día</span><div class="seg dias" id="p-dias" role="group" aria-labelledby="l-dia"></div></div>
+        <div class="campo"><label class="etiqueta" for="p-hora-sel">Hora</label><select id="p-hora-sel"></select></div>
+        <p class="nota">Las esperas son promedios reales de 2022 de la E.S.E. Pasto Salud para ese día y esa hora. Son una guía: cada día puede ser distinto.</p>
+      </div>
+      <div class="donde-resultado" aria-live="polite">
+        <div class="recomendado" id="pv-reco"></div>
+        <div id="pv-barras"></div>
+        <div class="mejores" id="pv-mejores"></div>
+        <p class="nota" id="pv-nota"></p>
+        <a class="boton-sec chico" href="#reservar" id="ir-reservar">Reservar una cita</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= RESERVAR ========================= -->
+<section class="bloque alt" id="reservar">
+  <div class="wrap">
+    <div class="titulo-bloque">
+      <h2>Reserva tu cita</h2>
+      <p>Elige el centro, la especialidad y el día en el calendario. Te mostramos los horarios libres y cuáles suelen tener menos espera.</p>
+    </div>
+    <div class="reserva">
+      <div class="reserva-col">
+        <div class="campos-dos">
+          <div class="campo"><label class="etiqueta" for="r-ips">Centro de salud</label><select id="r-ips"></select></div>
+          <div class="campo"><label class="etiqueta" for="r-esp">Especialidad</label><select id="r-esp"></select></div>
+        </div>
+        <div class="cal" id="cal">
+          <div class="cal-cab">
+            <button type="button" class="cal-nav" id="cal-prev" aria-label="Mes anterior">‹</button>
+            <b id="cal-mes" aria-live="polite"></b>
+            <button type="button" class="cal-nav" id="cal-next" aria-label="Mes siguiente">›</button>
+          </div>
+          <div class="cal-sem" aria-hidden="true"><span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span><span>Dom</span></div>
+          <div class="cal-dias" id="cal-dias" role="grid" aria-label="Días del mes"></div>
+          <div class="cal-leyenda"><span><i class="n-alta"></i>Muchos cupos</span><span><i class="n-media"></i>Algunos</span><span><i class="n-baja"></i>Pocos</span><span><i class="n-sin"></i>Sin cupos</span></div>
+        </div>
+      </div>
+      <div class="reserva-col">
+        <div id="r-franjas" class="franjas" aria-live="polite"><p class="sub">Elige un día en el calendario para ver los horarios.</p></div>
+        <form id="r-form" class="form-cita" hidden novalidate>
+          <h3 id="r-resumen">Tu cita</h3>
+          <div class="campo"><label class="etiqueta" for="r-nombre">Nombre completo</label><input id="r-nombre" type="text" maxlength="80" autocomplete="name" required></div>
+          <div class="campo"><label class="etiqueta" for="r-contacto">Celular o correo</label><input id="r-contacto" type="text" maxlength="80" autocomplete="tel" required></div>
+          <div class="campo"><label class="etiqueta" for="r-motivo">Motivo de la consulta <small>(opcional)</small></label><textarea id="r-motivo" rows="2" maxlength="300"></textarea></div>
+          <label class="acepta"><input id="r-acepta" type="checkbox"> Acepto que VitalData use mis datos solo para gestionar esta cita (Ley 1581 de 2012).</label>
+          <div class="cta"><button class="boton-pri" type="submit">Reservar cita</button><output id="r-error" role="alert" class="error"></output></div>
+        </form>
+        <div id="r-ok" class="cita-ok" hidden></div>
+      </div>
+    </div>
+    <div class="mi-cita">
+      <h3>¿Ya tienes una cita?</h3>
+      <form id="m-form" class="m-form"><label class="sr" for="m-codigo">Código de tu cita</label><input id="m-codigo" type="text" maxlength="12" placeholder="Código, por ejemplo VD-AB23CD" autocomplete="off"><button type="submit" class="boton-sec">Consultar</button></form>
+      <div id="m-res" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= URGENTE ========================= -->
+<section class="bloque" id="urgente">
+  <div class="wrap">
+    <div class="titulo-bloque">
+      <h2>¿Es urgente?</h2>
+      <p>Marca lo que está pasando y te decimos qué hacer. Si tienes dudas con un signo de alarma, llama al <b>123</b>.</p>
+    </div>
+    <div class="verif">
+      <div class="verif-lista" id="verif-lista"></div>
+      <div class="verif-res" id="verif-res" aria-live="polite"></div>
+    </div>
+    <h3 class="subt">Primeros auxilios mientras llega la ayuda</h3>
+    <div class="aux-barra"><label class="sr" for="aux-buscar">Buscar en primeros auxilios</label><input id="aux-buscar" type="text" placeholder="Buscar: quemadura, picadura, golpe en la cabeza, infarto…" autocomplete="off"><span id="aux-n" class="nota"></span></div>
+    <div class="auxilios" id="auxilios"></div>
+    <p class="nota">Son pasos básicos de primeros auxilios. No sustituyen un curso ni la atención de un profesional: llama al 123 siempre que haya una emergencia.</p>
+  </div>
+</section>
+
+<!-- ========================= OPINIONES ========================= -->
+<section class="bloque" id="opiniones">
+  <div class="wrap">
+    <div class="titulo-bloque">
+      <h2>Opiniones de quienes lo han usado</h2>
+      <p>Las opiniones las escriben las personas que usan el sitio. Cuéntanos qué te pareció, qué te sirvió y qué mejorarías.</p>
+    </div>
+    <div class="opiniones">
+      <div class="op-resumen" id="op-resumen"></div>
+      <div class="op-col">
+        <form id="op-form" class="form-op" novalidate>
+          <h3>Deja tu opinión</h3>
+          <fieldset class="estrellas"><legend class="etiqueta">Tu calificación</legend>
+            <input type="radio" name="est" id="e5" value="5"><label for="e5" title="5 estrellas">★</label>
+            <input type="radio" name="est" id="e4" value="4"><label for="e4" title="4 estrellas">★</label>
+            <input type="radio" name="est" id="e3" value="3"><label for="e3" title="3 estrellas">★</label>
+            <input type="radio" name="est" id="e2" value="2"><label for="e2" title="2 estrellas">★</label>
+            <input type="radio" name="est" id="e1" value="1"><label for="e1" title="1 estrella">★</label>
+          </fieldset>
+          <div class="campo"><label class="etiqueta" for="op-nombre">Nombre <small>(opcional)</small></label><input id="op-nombre" type="text" maxlength="40" autocomplete="given-name"></div>
+          <div class="campo"><label class="etiqueta" for="op-texto">Tu opinión</label><textarea id="op-texto" rows="3" maxlength="500" placeholder="¿Qué te pareció? ¿Qué mejorarías?"></textarea></div>
+          <div class="cta"><button class="boton-pri" type="submit">Publicar opinión</button><output id="op-msg" role="status" class="error"></output></div>
+        </form>
+        <div class="op-lista" id="op-lista"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= HOSPITALES ========================= -->
+<section class="hosp" id="hospitales">
+  <div class="wrap">
+    <div class="hosp-cab">
+      <p class="sobretitulo">Para hospitales y centros de salud</p>
+      <h2>Menos esperas para tus pacientes, mejores turnos para tu equipo</h2>
+      <p class="bajada">VitalData pronostica cuántos pacientes llegarán a urgencias cada hora, calcula cuánto personal hace falta y le muestra al paciente a dónde y cuándo ir. Con tus propios datos de ingreso, triage y atención.</p>
+      <div class="cta"><a class="boton-lima" href="#demo-hosp">Solicitar una demostración</a><a class="boton-borde" href="panel.html">Ver el panel en vivo</a></div>
+    </div>
+    <div class="hosp-cifras" id="hosp-cifras" aria-label="Cifras reales del sistema"></div>
+
+    <div class="hosp-grid">
+      <article class="tarjeta-h"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 7-8"/><path d="M14 7h6v6"/></svg><h3>Pronóstico por hora</h3><p>Cuántos pacientes llegarán, con rango probable, a partir del historial y del clima. Se evalúa contra métodos simples y con ventana que avanza.</p></article>
+      <article class="tarjeta-h"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M21 19c0-2.5-1.8-4.5-4-4.9"/></svg><h3>Personal recomendado</h3><p>Convierte el pronóstico en cuántas personas hacen falta por hora para cumplir tu meta de espera, y marca las horas críticas.</p></article>
+      <article class="tarjeta-h"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg><h3>Citas con menos espera</h3><p>El paciente reserva en línea y el sistema lo orienta a los horarios con menos espera, repartiendo mejor la demanda del día.</p></article>
+      <article class="tarjeta-h"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg><h3>Orientación al paciente</h3><p>Un asistente que explica qué hacer en casa, cuándo consultar y cuándo ir a urgencias, y que filtra consultas leves antes de que lleguen.</p></article>
+      <article class="tarjeta-h"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg><h3>Calidad y trazabilidad</h3><p>Cada carga de datos se concilia fila por fila, queda registrada y se controla antes de reentrenar. El modelo no se publica si pierde contra la referencia.</p></article>
+      <article class="tarjeta-h"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/></svg><h3>Tus datos, bajo tus reglas</h3><p>Solo necesitamos hora de ingreso, triage y hora de atención. Sin nombres ni historias clínicas. Corre en PostgreSQL y se integra por API.</p></article>
+    </div>
+
+    <div class="hosp-doble">
+      <div class="vista-previa" id="vista-previa">
+        <span class="etiqueta-h">Ejemplo real del panel</span>
+        <h3 id="vp-titulo">Hospital Local Civil · sábado 20 de agosto de 2022</h3>
+        <div class="vp-kpis" id="vp-kpis"></div>
+        <p class="nota-h" id="vp-nota"></p>
+        <a class="boton-sec chico" href="panel.html">Explorar el panel completo</a>
+      </div>
+      <form class="simulador" id="roi" novalidate>
+        <span class="etiqueta-h">Simulador de ahorro</span>
+        <h3>¿Cuánto podría ahorrar tu servicio?</h3>
+        <div class="roi-campos">
+          <div class="campo"><label class="etiqueta" for="roi-extra">Horas extra al mes en urgencias</label><input id="roi-extra" type="number" min="0" max="5000" value="400"></div>
+          <div class="campo"><label class="etiqueta" for="roi-costo">Costo por hora extra (COP)</label><input id="roi-costo" type="number" min="0" max="500000" step="1000" value="30000"></div>
+          <div class="campo"><label class="etiqueta" for="roi-precio">Plan VitalData al mes (COP)</label><input id="roi-precio" type="number" min="0" max="20000000" step="10000" value="780000"></div>
+        </div>
+        <div class="campo"><label class="etiqueta" for="roi-red">Reducción de horas extra que lograrías: <output id="roi-red-v">12 %</output></label><input id="roi-red" type="range" min="2" max="30" value="12"></div>
+        <div class="roi-res" id="roi-res" aria-live="polite"></div>
+        <p class="nota-h">Los valores son un ejemplo: cámbialos por los de tu servicio. Es una simulación con los supuestos que escribas, no un resultado garantizado: el efecto real se mide en un piloto con tus datos.</p>
+      </form>
+    </div>
+
+    <div class="hosp-camino">
+      <h3>Cómo empezamos</h3>
+      <ol>
+        <li><b>Conversación</b><span>Definimos el servicio, la meta de espera y quién usará el panel.</span></li>
+        <li><b>Datos</b><span>Cargamos el historial de ingreso, triage y atención, idealmente de los últimos 12 meses.</span></li>
+        <li><b>Piloto de 3 meses</b><span>El panel corre junto a tu operación, con el equipo coordinador.</span></li>
+        <li><b>Medición</b><span>Comparamos esperas y horas extra antes y después, y decidimos juntos.</span></li>
+      </ol>
+    </div>
+
+    <form class="demo-form" id="demo-hosp" novalidate>
+      <div>
+        <h3>Solicita una demostración</h3>
+        <p>Cuéntanos de tu institución y te mostramos el panel con tus propios números.</p>
+      </div>
+      <div class="demo-campos">
+        <div class="campo"><label class="etiqueta" for="dh-inst">Institución</label><input id="dh-inst" type="text" maxlength="120" autocomplete="organization"></div>
+        <div class="campo"><label class="etiqueta" for="dh-nombre">Tu nombre</label><input id="dh-nombre" type="text" maxlength="80" autocomplete="name"></div>
+        <div class="campo"><label class="etiqueta" for="dh-cargo">Cargo <small>(opcional)</small></label><input id="dh-cargo" type="text" maxlength="60" autocomplete="organization-title"></div>
+        <div class="campo"><label class="etiqueta" for="dh-contacto">Correo o celular</label><input id="dh-contacto" type="text" maxlength="80" autocomplete="email"></div>
+        <div class="campo ancho"><label class="etiqueta" for="dh-msg">¿Qué te gustaría resolver? <small>(opcional)</small></label><textarea id="dh-msg" rows="2" maxlength="500"></textarea></div>
+        <label class="acepta ancho"><input id="dh-acepta" type="checkbox"> Acepto que VitalData use estos datos solo para contactarme (Ley 1581 de 2012).</label>
+        <div class="cta ancho"><button class="boton-lima" type="submit">Enviar solicitud</button><output id="dh-msj" role="status" class="error"></output></div>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- ========================= PREGUNTAS ========================= -->
+<section class="bloque" id="preguntas">
+  <div class="wrap">
+    <div class="titulo-bloque"><h2>Preguntas frecuentes</h2></div>
+    <div class="faq" id="faq"></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="pie">
+  <div class="wrap">
+    <p><b>VitalData</b> · Proyecto de Data Thinking, Universidad Autónoma de Occidente, 2026.</p>
+    <p>La orientación es de carácter general y no sustituye el consejo, el diagnóstico ni el tratamiento de un profesional de la salud. Las esperas provienen de datos abiertos de la E.S.E. Pasto Salud (datos.gov.co). Las citas se gestionan en la agenda de VitalData y los datos se usan solo para ese fin. En una emergencia, llama al 123.</p>
+    <p><a href="panel.html">Para hospitales</a> · <a href="proyecto.html">Documentación técnica</a></p>
+  </div>
+</footer>
+
+<script src="data/snapshot.js"></script>
+<script src="js/api.js"></script>
+<script src="js/publico.js"></script>
+</body>
+</html>

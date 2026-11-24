@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VitalData · Documentación técnica</title>
+<meta name="description" content="Pronóstico de llegadas a urgencias y personal recomendado, construido con datos abiertos reales de la E.S.E. Pasto Salud y del IDEAM. Proyecto de Data Thinking, Universidad Autónoma de Occidente.">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('vd_tema')||'dark'}catch(e){document.documentElement.dataset.theme='dark'}</script>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip" href="#contenido">Saltar al contenido</a>
+
+</head>
+<body>
+<a class="skip" href="#contenido">Saltar al contenido</a>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="VitalData, aplicación"><img src="assets/logo.svg" width="34" height="34" alt="">VitalData</a>
+    <nav class="menu" aria-label="Secciones">
+      <a href="#problema">Problema</a><a href="#datos">Datos</a><a href="#hallazgo">Hallazgo</a><a href="#modelo">Modelo</a>
+      <a href="#arquitectura">Arquitectura</a><a href="#calidad">Calidad</a><a href="#finanzas">Finanzas</a><a href="#usuarios">Usuarios</a><a href="#equipo">Equipo</a>
+    </nav>
+    <a class="btn small solid" href="./">Abrir la aplicación</a>
+    <span id="modo" class="modo" title="De dónde salen los datos">…</span>
+  </div>
+</header>
+<main id="contenido">
+<!-- ===================== INICIO ===================== -->
+<section id="inicio">
+  <div class="wrap">
+    <div class="hero">
+      <div>
+        <div class="eyebrow">Proyecto de Data Thinking · Universidad Autónoma de Occidente</div>
+        <h1>Saber cuántos van a llegar <em style="color:var(--coral-d);font-style:normal">antes de que lleguen</em></h1>
+        <p class="lead">Las urgencias se llenan y se vacían por horas, no por turnos. Con datos reales de tres centros de salud de Pasto, aprendimos cuándo llega la gente, cuánto espera y cuántas personas hacen falta para que esa espera no se dispare.</p>
+        <div class="cta">
+          <a class="btn solid" href="./">Abrir la aplicación</a>
+          <a class="btn line" href="#problema">Ver la documentación</a>
+        </div>
+        <div class="cifras" id="cifras" aria-live="polite">
+          <div class="cifra"><b data-k="atenciones">–</b><span>atenciones reales de urgencias</span></div>
+          <div class="cifra"><b data-k="ips">–</b><span>centros de salud de Pasto</span></div>
+          <div class="cifra"><b data-k="mediana">–</b><span>minutos de espera, la mitad de los pacientes</span></div>
+          <div class="cifra"><b data-k="p90">–</b><span>minutos, uno de cada diez espera más</span></div>
+        </div>
+      </div>
+      <div class="revelar">
+        <svg class="ilus" viewBox="0 0 560 480" role="img" aria-label="Ilustración: una sala de espera de urgencias con personas sentadas, un reloj en la pared y una curva de demanda que sube y baja">
+          <defs>
+            <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE7E4"/><stop offset="1" stop-color="#FAF6EF"/></linearGradient>
+          </defs>
+          <rect x="10" y="10" width="540" height="460" rx="28" fill="url(#g1)"/>
+          <rect x="10" y="330" width="540" height="140" rx="0" fill="#F2ECE1"/>
+          <rect x="10" y="300" width="540" height="30" fill="#E6DED0"/>
+          <!-- reloj -->
+          <circle cx="470" cy="92" r="42" fill="#fff" stroke="#22282D" stroke-width="5"/>
+          <g stroke="#22282D" stroke-width="4" stroke-linecap="round"><line x1="470" y1="92" x2="470" y2="66"/><line x1="470" y1="92" x2="490" y2="104"/></g>
+          <circle cx="470" cy="92" r="4" fill="#FF4438"/>
+          <!-- curva de demanda -->
+          <path d="M40 250 C100 250 120 160 180 160 S260 235 310 215 S400 120 520 180" fill="none" stroke="#FF4438" stroke-width="6" stroke-linecap="round"/>
+          <path d="M40 250 C100 250 120 160 180 160 S260 235 310 215 S400 120 520 180 L520 300 L40 300 Z" fill="#FF4438" opacity=".12"/>
+          <text x="46" y="148" font-size="15" font-weight="700" fill="#D9382B" font-family="Segoe UI,sans-serif">llegadas por hora</text>
+          <!-- sillas y personas -->
+          <g>
+            <rect x="52" y="330" width="86" height="12" rx="5" fill="#22282D"/><rect x="60" y="342" width="8" height="40" fill="#22282D"/><rect x="122" y="342" width="8" height="40" fill="#22282D"/>
+            <circle cx="80" cy="288" r="16" fill="#E9B38D"/><rect x="64" y="304" width="32" height="30" rx="12" fill="#3B6FD4"/>
+            <circle cx="112" cy="284" r="14" fill="#C98F63"/><rect x="98" y="299" width="28" height="33" rx="11" fill="#FF4438"/>
+          </g>
+          <g>
+            <rect x="170" y="330" width="86" height="12" rx="5" fill="#22282D"/><rect x="178" y="342" width="8" height="40" fill="#22282D"/><rect x="240" y="342" width="8" height="40" fill="#22282D"/>
+            <circle cx="200" cy="286" r="15" fill="#F1C8A5"/><rect x="185" y="301" width="30" height="31" rx="12" fill="#E0A100"/>
+            <circle cx="232" cy="290" r="13" fill="#8B5E3C"/><rect x="219" y="304" width="26" height="28" rx="10" fill="#2E9E6B"/>
+          </g>
+          <g>
+            <rect x="290" y="330" width="86" height="12" rx="5" fill="#22282D"/><rect x="298" y="342" width="8" height="40" fill="#22282D"/><rect x="360" y="342" width="8" height="40" fill="#22282D"/>
+            <circle cx="322" cy="286" r="15" fill="#D9A47D"/><rect x="307" y="301" width="30" height="31" rx="12" fill="#22282D"/>
+            <circle cx="354" cy="284" r="14" fill="#F1C8A5"/><rect x="340" y="299" width="28" height="33" rx="11" fill="#FF8A80"/>
+          </g>
+          <!-- coordinadora -->
+          <g>
+            <circle cx="458" cy="262" r="17" fill="#D9A47D"/><rect x="440" y="280" width="36" height="52" rx="14" fill="#fff" stroke="#22282D" stroke-width="3"/>
+            <rect x="404" y="318" width="100" height="62" rx="8" fill="#22282D"/><rect x="412" y="326" width="84" height="40" rx="4" fill="#FFE7E4"/>
+            <polyline points="418,358 436,342 452,352 472,334 490,346" fill="none" stroke="#FF4438" stroke-width="3" stroke-linecap="round"/>
+          </g>
+          <text x="46" y="440" font-size="14" fill="#5E6770" font-family="Segoe UI,sans-serif">Ilustración del equipo</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PROBLEMA ===================== -->
+<section id="problema" class="alt">
+  <div class="wrap">
+    <div class="hdr revelar"><div class="eyebrow">1 · El problema</div><h2>Todos conocemos a alguien que esperó horas</h2></div>
+    <div class="grid g2" style="align-items:start">
+      <div class="revelar">
+        <p class="quote">“Escogimos este proyecto porque es un problema que cualquier colombiano ha vivido o ha visto de cerca: el caos en las salas de urgencias.”</p>
+        <p class="firma">Sebastian y Julian, al empezar el curso.</p>
+        <p>Cuando investigamos, vimos que no falta información. Cada atención deja una hora de llegada, un nivel de triage y una hora de atención. Esos datos casi siempre se usan para facturar y archivar, y casi nunca para mirar hacia adelante.</p>
+        <p>Por eso el turno se planea “a ciegas”: con el mismo personal para una madrugada tranquila que para la mañana más cargada. Cuando llega el pico, la espera sube.</p>
+        <div class="grid g2" style="margin-top:18px">
+          <div class="card tint persona"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="#FFE7E4"/><circle cx="32" cy="25" r="10" fill="#D9A47D"/><path d="M12 56c2-14 10-18 20-18s18 4 20 18z" fill="#22282D"/></svg><div><h3>Quien coordina</h3><p class="sub">Organiza los turnos sin saber cuántos llegarán. Si sobra gente, cuesta; si falta, se desborda.</p></div></div>
+          <div class="card tint persona"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="#E1EBFB"/><circle cx="32" cy="25" r="10" fill="#F1C8A5"/><path d="M12 56c2-14 10-18 20-18s18 4 20 18z" fill="#3B6FD4"/></svg><div><h3>Quien espera</h3><p class="sub">No sabe cuánto va a tardar ni si hay otra urgencia más vacía cerca.</p></div></div>
+        </div>
+      </div>
+      <div class="card revelar">
+        <h3>Lo que muestran los datos reales</h3>
+        <p class="sub">Cuánto pasa entre que el paciente llega y lo atienden, en 79.521 atenciones de la E.S.E. Pasto Salud. En rojo, quienes esperan más de dos horas.</p>
+        <div id="hist" class="chart" aria-live="polite"></div>
+        <p class="nota" id="hist-nota"></p>
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-top:44px">
+      <div class="card revelar">
+        <h3>Para quién lo hacemos y qué buscamos</h3>
+        <ul class="check" id="objetivos">
+          <li><span class="ic ok">1</span><div><b>Coordinador médico.</b> Un tablero que diga cuántos llegarán cada hora y cuántas personas hacen falta.</div></li>
+          <li><span class="ic ok">2</span><div><b>Paciente.</b> Un asistente que oriente según lo que siente y muestre qué urgencia tiene menos espera.</div></li>
+        </ul>
+      </div>
+      <div class="card revelar">
+        <h3>Resultados frente a nuestros criterios</h3>
+        <p class="sub">Esta lista se calcula sola con los resultados medidos del sistema.</p>
+        <ul class="check" id="criterios" aria-live="polite"></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== DATOS ===================== -->
+<section id="datos">
+  <div class="wrap">
+    <div class="hdr revelar"><div class="eyebrow">2 · Los datos</div><h2>Datos públicos que cualquiera puede comprobar</h2>
+      <p class="lead">No inventamos nada. Descargamos las atenciones de urgencias de la E.S.E. Pasto Salud y el clima del IDEAM directamente de datos.gov.co, y cada fila que descartamos queda explicada.</p></div>
+    <div class="grid g2">
+      <div class="card revelar">
+        <h3>De la fuente a la página</h3>
+        <p class="sub">Toca cada paso para ver qué entra, qué sale y dónde está el código.</p>
+        <div id="flujo-datos" class="arq"></div>
+        <div id="flujo-det" class="card tint det" aria-live="polite" style="margin-top:14px"></div>
+      </div>
+      <div class="card revelar">
+        <h3>Cada fila cuenta</h3>
+        <p class="sub">Conciliación de la última carga: lo que bajó de la API frente a lo que quedó en la base.</p>
+        <div id="concilia"></div>
+        <div class="scroll" style="margin-top:14px"><table class="t" id="tabla-reglas"><thead><tr><th>Regla</th><th>Filas</th><th>Qué hicimos</th></tr></thead><tbody></tbody></table></div>
+      </div>
+    </div>
+    <div class="card revelar" style="margin-top:20px">
+      <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:end">
+        <div><h3>Lo que descubrimos al mirar las series</h3><p class="sub">Llegadas por día. Dos cosas rompen cualquier patrón y las tuvimos en cuenta.</p></div>
+        <div class="seg" id="sel-ips-serie" role="group" aria-label="Centro de salud"></div>
+      </div>
+      <div id="serie" class="chart"></div>
+      <div class="grid g2" style="margin-top:8px">
+        <p class="nota"><b>Un hueco de un año.</b> De abril de 2020 a marzo de 2021 la fuente no trae registros, por eso entrenamos solo con el periodo continuo desde abril de 2021.</p>
+        <p class="nota"><b>Un salto en mayo de 2022.</b> Desde ese mes las llegadas casi se duplican. Por eso el modelo usa el nivel de la última semana, no un promedio de toda la historia.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== HALLAZGO ===================== -->
+<section id="hallazgo" class="alt">
+  <div class="wrap">
+    <div class="hdr revelar"><div class="eyebrow">3 · El hallazgo que sostiene la idea</div><h2>Cuando llegan más, se espera más</h2>
+      <p class="lead">Nuestra hipótesis era que la congestión de la hora se nota en la espera. Con datos reales se puede comprobar, y con una prueba que no depende de nosotros.</p></div>
+    <div class="grid g2">
+      <div class="card revelar">
+        <div class="seg" id="sel-ips-espera" role="group" aria-label="Centro de salud" style="margin-bottom:10px"></div>
+        <div id="curva" class="chart"></div>
+        <p class="nota" id="curva-nota"></p>
+      </div>
+      <div class="card revelar">
+        <h3>Cómo leerlo</h3>
+        <p>Cada punto es la espera media de las horas en las que llegó ese número de personas. La barra es el intervalo de confianza del 95 %.</p>
+        <p id="curva-lectura"></p>
+        <h3 style="margin-top:18px">Qué no decimos</h3>
+        <p class="sub">La relación existe, pero es moderada: la espera también depende del triage de cada paciente y del personal que había, y la fuente no trae el personal por turno. Por eso recomendamos personal con una meta de espera que define quien usa la herramienta, no con una calibración que los datos no permiten.</p>
+        <div id="triage-esp"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== MODELO ===================== -->
+<section id="modelo">
+  <div class="wrap">
+    <div class="hdr revelar"><div class="eyebrow">4 · ¿Funciona el modelo?</div><h2>Lo medimos contra métodos simples, no contra nuestra palabra</h2>
+      <p class="lead">Si un modelo no le gana a “lo mismo de las últimas semanas”, no vale la pena. Evaluamos con ventana que avanza: cada semana se reentrena solo con lo que ya había pasado y se pronostican los días siguientes. El periodo de prueba no se usó para elegir nada.</p></div>
+    <div class="card revelar">
+      <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
+        <div class="seg" id="sel-nivel" role="group" aria-label="Nivel de agrupación"><button data-n="hora" aria-pressed="false">Por hora</button><button data-n="3h" aria-pressed="true">Por franja de 3 horas</button><button data-n="dia" aria-pressed="false">Por día</button></div>
+        <span class="nota" id="m-ventana"></span>
+      </div>
+      <div id="m-chart" class="chart" style="margin-top:10px"></div>
+      <div class="legend" id="m-leg"></div>
+    </div>
+    <div class="grid g3" style="margin-top:20px">
+      <div class="card revelar"><h3>¿Le gana a la referencia?</h3><div id="m-gana"></div></div>
+      <div class="card revelar"><h3>¿Ayuda el clima?</h3><div id="m-clima"></div></div>
+      <div class="card revelar"><h3>¿El rango del 80 % acierta?</h3><div id="m-cob"></div></div>
+    </div>
+    <div class="card tint revelar" style="margin-top:20px"><h3>Lo que tenemos que decir con honestidad</h3><div id="m-honesto"></div></div>
+  </div>
+</section>
+
+<!-- ===================== ARQUITECTURA ===================== -->
+<section id="arquitectura" class="dark">
+  <div class="wrap">
+    <div class="hdr revelar"><div class="eyebrow">5 · Cómo funciona por dentro</div><h2>Un solo comando levanta todo</h2>
+      <p class="lead">Base de datos, API, orquestador y esta página corren en contenedores. Toca cada pieza para ver qué hace y dónde está el código.</p></div>
+    <div class="card revelar" style="background:#1F262B;border-color:#333D44;color:#E9EDF0"><div id="arq" class="arq"></div><div id="arq-det" class="det" style="padding:14px 4px 0" aria-live="polite"></div></div>
+    <div class="grid g2" style="margin-top:20px">
+      <div class="card revelar" style="background:#1F262B;border-color:#333D44;color:#E9EDF0"><h3 style="color:#fff">Modelo de datos (estrella)</h3><p class="sub" style="color:#B9C1C7">Una tabla de hechos con cada atención y dimensiones pequeñas. Las restricciones evitan datos imposibles.</p><div id="er" class="arq"></div></div>
+      <div class="card revelar" style="background:#1F262B;border-color:#333D44;color:#E9EDF0"><h3 style="color:#fff">Para correrlo usted mismo</h3><div class="code"><span class="c"># 1. todo el sistema</span>
+docker compose up -d
+<span class="c"># 2. cargar los datos reales y publicar los modelos</span>
+python scripts/correr_etl.py --init --triage --clima
+python scripts/publicar_modelos.py
+<span class="c"># 3. abrir</span>
+http://localhost:8000      <span class="c"># esta página</span>
+http://localhost:8000/docs <span class="c"># API interactiva</span>
+http://localhost:8080      <span class="c"># Airflow</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CALIDAD ===================== -->
+<section id="calidad">
+  <div class="wrap">
+    <div class="hdr revelar"><div class="eyebrow">6 · Pruebas, orquestación y base de datos</div><h2>Lo que demuestra que no es un prototipo de papel</h2></div>
+    <div class="grid g3">
+      <div class="card revelar"><h3>Pruebas automáticas</h3><div id="ev-pruebas"><p class="sub">Cargando…</p></div></div>
+      <div class="card revelar"><h3>Orquestación (Airflow)</h3><div id="ev-airflow"><p class="sub">Cargando…</p></div></div>
+      <div class="card revelar"><h3>Consultas optimizadas</h3><div id="ev-consultas"><p class="sub">Cargando…</p></div></div>
+    </div>
+    <div class="card revelar" style="margin-top:20px"><h3>Historial de cargas del ETL</h3><p class="sub">Cada corrida queda registrada, también las que fallan.</p>
+      <div class="scroll"><table class="t" id="tabla-corridas"><thead><tr><th>#</th><th>Flujo</th><th>Estado</th><th>Extraídas</th><th>Cargadas</th><th>Cuándo</th></tr></thead><tbody></tbody></table></div></div>
+    <div class="gal revelar" style="margin-top:20px" id="galeria-ev"></div>
+  </div>
+</section>
+
+<!-- ===================== FINANZAS ===================== -->
+<section id="finanzas" class="alt">
+  <div class="wrap">
+    <div class="hdr revelar"><div class="eyebrow">7 · Cuánto cuesta y cuánto vale</div><h2>Precios reales, cuentas abiertas</h2>
+      <p class="lead">Los costos salen de páginas oficiales de cada proveedor y de contratos públicos. El modelo completo está en un Excel con fórmulas y fuentes. Mueve los números y mira cómo cambia el punto de equilibrio.</p></div>
+    <div class="grid g3 revelar" id="planes"></div>
+    <div class="panel" style="margin-top:28px">
+      <aside class="card tint ctrl revelar">
+        <label for="f-precio">Precio mensual del plan Completo <output id="o-fprecio"></output></label><input type="range" id="f-precio" min="400000" max="2000000" step="10000" value="780000">
+        <label for="f-var">Costo variable por cliente <output id="o-fvar"></output></label><input type="range" id="f-var" min="100000" max="700000" step="10000" value="270000">
+        <label for="f-fijo">Costo fijo mensual <output id="o-ffijo"></output></label><input type="range" id="f-fijo" min="500000" max="12000000" step="50000" value="901237">
+        <p class="help">Con 901.237 pesos solo se cubre la plataforma. Con 10.590.886 se pagan además dos sueldos de dos salarios mínimos.</p>
+        <label for="f-hrs">Horas extra que se evitan al mes <output id="o-fhrs"></output></label><input type="range" id="f-hrs" min="0" max="160" step="2" value="31">
+        <p class="help">El modelo calcula unas 156 horas-persona que faltan al mes en un hospital mediano; la meta es evitar 20 %.</p>
+      </aside>
+      <div class="revelar"><div class="kpis" id="f-kpis"></div><div class="card"><h3>Resultado mensual según clientes</h3><div id="f-chart" class="chart"></div>
+        <p class="nota">Cifras del modelo financiero (hoja Equilibrio). Los supuestos sin fuente están marcados en el Excel como “validar”.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== USUARIOS ===================== -->
+<section id="usuarios">
+  <div class="wrap">
+    <div class="hdr revelar"><div class="eyebrow">8 · Diseño y pruebas con personas</div><h2>Del boceto a lápiz a lo que usted está viendo</h2>
+      <p class="lead">Pasamos por los cuatro niveles de prototipo. Esta sección también es la prueba de usabilidad: quien la haga queda registrado de forma anónima y el resultado se muestra aquí mismo.</p></div>
+    <div class="gal revelar" id="galeria-proto"></div>
+    <div class="grid g2" style="margin-top:28px">
+      <div class="card revelar">
+        <h3>Haga la prueba (5 minutos)</h3>
+        <p class="sub">Primero cumpla las cinco tareas en la página y mida cuánto tarda. Luego responda el cuestionario.</p>
+        <ol class="pasos" id="tareas">
+          <li>En el <a href="./" target="_blank" rel="noopener">sitio para pacientes</a>, en «¿A dónde te conviene ir?», elija el sábado a las 10:00 y diga qué centro tiene menos espera.</li>
+          <li>En el asistente, escriba “tengo fiebre y dolor de garganta” y encuentre qué se suele tomar.</li>
+          <li>Pregunte por las señales de alarma y diga una de ellas.</li>
+          <li>Escriba “me duele el pecho” y diga qué le recomienda el asistente.</li>
+          <li>En el <a href="panel.html" target="_blank" rel="noopener">panel para hospitales</a>, elija un día y diga cuántos pacientes se pronosticaron.</li>
+        </ol>
+        <div class="cta" style="margin-top:14px"><button class="btn small ghost" id="u-cron" type="button">▶ Empezar a medir el tiempo</button><output id="u-tiempo" style="align-self:center;font-weight:700"></output></div>
+      </div>
+      <form class="card revelar" id="u-form" novalidate>
+        <h3>Cuestionario</h3>
+        <div class="grid g2" style="gap:12px">
+          <div><label for="u-rol" class="help">Usted es</label><select id="u-rol"><option value="coordinador">Coordinador o personal de salud</option><option value="paciente">Paciente o familiar</option><option value="otro" selected>Otra persona</option></select></div>
+          <div><label for="u-ok" class="help">Tareas que logró (0 a 5)</label><input id="u-ok" type="text" inputmode="numeric" value="5"></div>
+        </div>
+        <div id="u-sus"></div>
+        <label for="u-com" class="help" style="display:block;margin-top:10px">¿Qué cambiaría? (opcional)</label><textarea id="u-com" rows="2" maxlength="600"></textarea>
+        <div class="cta" style="margin-top:12px"><button class="btn solid" type="submit">Enviar mi respuesta</button><output id="u-res" role="status" style="align-self:center"></output></div>
+      </form>
+    </div>
+    <div class="card revelar" style="margin-top:20px"><h3>Resultados hasta ahora</h3><div id="u-resumen"></div></div>
+  </div>
+</section>
+
+<section id="equipo" class="alt">
+  <div class="wrap">
+    <div class="hdr revelar"><div class="eyebrow">9 · Quiénes somos</div><h2>El equipo</h2></div>
+    <div class="card revelar" style="max-width:640px">
+      <div class="persona" style="margin:12px 0"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="#22282D"/><text x="32" y="40" text-anchor="middle" font-size="24" fill="#fff" font-family="Georgia">SL</text></svg><div><b>Sebastian Lozano</b><br><span class="sub">Ingeniería, Universidad Autónoma de Occidente</span></div></div>
+      <div class="persona" style="margin:12px 0"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="#FF4438"/><text x="32" y="40" text-anchor="middle" font-size="24" fill="#fff" font-family="Georgia">JC</text></svg><div><b>Julian David Cuellar</b><br><span class="sub">Ingeniería, Universidad Autónoma de Occidente</span></div></div>
+      <p class="nota">Repositorio con el código, las pruebas, el DAG de Airflow y los diagramas: <a href="#" id="repo-link">enlace del repositorio</a>.</p>
+    </div>
+  </div>
+</section>
+</main>
+<footer>
+  <div class="wrap">
+    <p><b>VitalData</b> · Proyecto de Data Thinking, Universidad Autónoma de Occidente, 2026.</p>
+    <p>Fuentes: E.S.E. Pasto Salud (Clasificación en triage de urgencias, datos.gov.co vt5n-eu2r), IDEAM (precipitación s54a-sgyg y temperatura sbwg-7ju4), SECOP II, Banco de la República (TRM). Prototipo académico: no reemplaza una valoración médica.</p>
+  </div>
+</footer>
+<script src="data/snapshot.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/api.js"></script>
+<script src="js/diagramas.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
