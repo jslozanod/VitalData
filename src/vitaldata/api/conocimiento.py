@@ -1,0 +1,281 @@
+"""Orientacion en salud para el asistente del paciente.
+
+Es informacion general de autocuidado, escrita de forma conservadora: no da dosis, no recomienda antibioticos ni
+medicamentos que requieren formula, y siempre dice cuando hay que consultar. No reemplaza una valoracion medica.
+Los patrones estan en minusculas y sin tildes (el texto del usuario se normaliza antes de compararlo).
+"""
+from __future__ import annotations
+
+AVISO_MEDICAMENTOS = ("Esto es orientación general, no una fórmula médica. Lee siempre la etiqueta. Si estás embarazada, tienes alergias o una "
+                      "enfermedad crónica, o es para un niño o un adulto mayor, consulta antes con un médico o un farmacéutico.")
+
+# nivel: "leve" (autocuidado y control si no mejora) o "consulta_pronto" (conviene que lo vea un profesional pronto)
+CONDICIONES: list[dict] = [
+    {
+        "id": "gripa", "nombre": "Gripa o resfriado", "nivel": "leve",
+        "patrones": [r"gripa", r"gripe", r"resfri", r"congestion", r"moquera", r"mocos", r"estornud", r"nariz (tapada|congestionada|que moquea)", r"catarro"],
+        "ejemplos": ["tengo gripa", "estoy resfriado", "tengo la nariz tapada"],
+        "resumen": "Parece un resfriado o una gripa. Casi siempre mejoran solos en 7 a 10 días con cuidados en casa.",
+        "casa": ["Descansa y duerme bien.", "Toma líquidos en abundancia: agua, aguas aromáticas, caldos.",
+                 "Lávate la nariz con solución salina para destapar.", "Ventila los espacios y lávate las manos seguido para no contagiar."],
+        "medicamentos": ["Acetaminofén (paracetamol) si tienes fiebre o malestar general.", "Solución salina nasal para la congestión.",
+                         "Los antibióticos no sirven para la gripa: no los tomes sin fórmula."],
+        "consultar_si": ["La fiebre dura más de 3 días.", "No mejoras después de 10 días, o empeoras después de la primera semana.",
+                         "Tienes dolor fuerte de oído o de cara.", "Eres adulto mayor o tienes asma, diabetes o una enfermedad del corazón o de los pulmones."],
+        "alarma": ["Dificultad para respirar o respiración muy rápida.", "Labios o cara morados.", "Confusión o mucho sueño y es difícil despertarte."],
+    },
+    {
+        "id": "fiebre", "nombre": "Fiebre", "nivel": "leve",
+        "patrones": [r"fiebre", r"temperatura alta", r"calentura", r"escalofrio"],
+        "ejemplos": ["tengo fiebre", "me dio calentura"],
+        "resumen": "La fiebre es una señal de que el cuerpo está combatiendo algo. Lo importante es cuánto dura y qué otros síntomas la acompañan.",
+        "casa": ["Toma líquidos en abundancia.", "Usa ropa ligera y mantén el ambiente fresco.", "Descansa.", "Mide la temperatura con un termómetro."],
+        "medicamentos": ["Acetaminofén (paracetamol) para bajar la fiebre y el malestar.",
+                         "No combines varios medicamentos para la fiebre sin que un médico lo indique.", "No le des aspirina a niños ni adolescentes."],
+        "consultar_si": ["La fiebre dura más de 3 días.", "Pasa de 39 °C y no cede con acetaminofén.",
+                         "Hay mucha tos, dolor al orinar, dolor de oído o dolor de garganta fuerte.", "Estás embarazada, eres adulto mayor o tienes una enfermedad crónica."],
+        "alarma": ["Fiebre en un bebé menor de 3 meses: llévalo de inmediato a urgencias.", "Rigidez de cuello, manchas moradas en la piel o confusión.",
+                   "Dificultad para respirar.", "Convulsiones."],
+    },
+    {
+        "id": "garganta", "nombre": "Dolor de garganta", "nivel": "leve",
+        "patrones": [r"garganta", r"amigdal", r"al tragar", r"ronquera", r"afonia"],
+        "ejemplos": ["me duele la garganta", "tengo dolor de garganta"],
+        "resumen": "El dolor de garganta suele ser por un virus y mejora en pocos días.",
+        "casa": ["Toma líquidos tibios y descansa la voz.", "Haz gárgaras con agua tibia con un poco de sal.", "Evita el cigarrillo y los ambientes con humo.",
+                 "La miel ayuda a calmar la garganta; no se la des a menores de 1 año."],
+        "medicamentos": ["Acetaminofén para el dolor o la fiebre.", "Pastillas o caramelos para la garganta, según la etiqueta.",
+                         "No tomes antibióticos sin fórmula: la mayoría de los casos son virales."],
+        "consultar_si": ["Dura más de 3 a 5 días o hay fiebre alta.", "Ves placas blancas o pus en las amígdalas.", "Tienes ganglios muy inflamados o dolor muy fuerte de un solo lado."],
+        "alarma": ["No puedes tragar ni la saliva.", "Dificultad para respirar o ruido al respirar.", "Hinchazón en el cuello o la lengua."],
+    },
+    {
+        "id": "tos", "nombre": "Tos", "nivel": "leve",
+        "patrones": [r"\btos\b", r"tosiendo", r"tosi\b"],
+        "ejemplos": ["tengo tos", "estoy con mucha tos"],
+        "resumen": "La tos casi siempre acompaña a un resfriado y se va sola en una a tres semanas.",
+        "casa": ["Toma líquidos tibios en abundancia.", "Mantén el aire húmedo y evita el humo y el polvo.", "Duerme con la cabeza un poco elevada.",
+                 "La miel calma la tos en adultos y en niños mayores de 1 año."],
+        "medicamentos": ["Acetaminofén si hay fiebre o malestar.", "No des jarabes para la tos a niños pequeños sin indicación del pediatra.",
+                         "No tomes antibióticos sin fórmula."],
+        "consultar_si": ["Dura más de 2 semanas.", "Tienes fiebre alta por más de 3 días.", "Escuchas silbidos en el pecho o te cansas al caminar.",
+                         "Tienes una enfermedad del corazón o de los pulmones."],
+        "alarma": ["Tos con sangre.", "Dificultad para respirar.", "Labios morados."],
+    },
+    {
+        "id": "cabeza", "nombre": "Dolor de cabeza", "nivel": "leve",
+        "patrones": [r"dolor de cabeza", r"cefalea", r"jaqueca", r"migrana", r"duele (la )?cabeza", r"cabeza me duele"],
+        "ejemplos": ["me duele la cabeza", "tengo dolor de cabeza"],
+        "resumen": "La mayoría de los dolores de cabeza son por tensión, cansancio o poca hidratación y mejoran con descanso.",
+        "casa": ["Descansa en un lugar tranquilo y con poca luz.", "Toma agua: la falta de líquidos es una causa frecuente.",
+                 "Una compresa fría en la frente o tibia en el cuello puede aliviar.", "Piensa si dormiste poco, saltaste comidas o pasaste mucho tiempo frente a una pantalla."],
+        "medicamentos": ["Acetaminofén, según la etiqueta.", "Si necesitas tomar analgésicos casi todos los días, consúltalo con un médico."],
+        "consultar_si": ["Los dolores son frecuentes o cada vez más fuertes.", "El dolor dura más de 3 días.", "Tienes fiebre junto con el dolor de cabeza."],
+        "alarma": ["El peor dolor de cabeza de tu vida o uno que empezó de golpe.", "Después de un golpe en la cabeza.",
+                   "Con rigidez de cuello, confusión, visión doble, debilidad o dificultad para hablar.", "Con convulsiones o desmayo."],
+    },
+    {
+        "id": "estomago", "nombre": "Dolor de estómago o diarrea", "nivel": "leve",
+        "patrones": [r"diarrea", r"estomago", r"abdomin", r"barriga", r"colico", r"retorcijon", r"gastritis", r"reflujo", r"acidez", r"indigestion", r"empachad", r"panza"],
+        "ejemplos": ["me duele el estomago", "tengo diarrea", "tengo acidez"],
+        "resumen": "Los malestares de estómago y la diarrea suelen ser por comida o por un virus y mejoran en uno a tres días. Lo principal es no deshidratarse.",
+        "casa": ["Toma suero oral o líquidos en sorbos frecuentes.", "Come porciones pequeñas y suaves: arroz, plátano, pollo cocido, papa.",
+                 "Evita alcohol, grasas, picante y lácteos mientras te mejoras.", "Lávate las manos antes de comer y después de ir al baño."],
+        "medicamentos": ["Suero oral (sales de rehidratación) para reponer líquidos.", "Para la acidez, antiácidos de venta libre, según la etiqueta.",
+                         "No tomes antibióticos ni antidiarreicos sin que un médico lo indique, sobre todo si hay fiebre o sangre."],
+        "consultar_si": ["La diarrea dura más de 2 días o son muchas deposiciones.", "Hay fiebre alta.", "Es un niño pequeño, un adulto mayor o una mujer embarazada.",
+                         "Tienes signos de deshidratación: mucha sed, boca seca u orina muy oscura o escasa."],
+        "alarma": ["Sangre en las heces o vómito con sangre.", "Dolor de abdomen muy fuerte, continuo o con el abdomen duro.",
+                   "Vómitos que no te dejan tomar líquidos.", "Mucho sueño, confusión o desmayo."],
+    },
+    {
+        "id": "vomito", "nombre": "Vómito o náuseas", "nivel": "leve",
+        "patrones": [r"vomit", r"nausea", r"ganas de vomitar", r"devolv"],
+        "ejemplos": ["tengo náuseas", "estoy vomitando"],
+        "resumen": "El vómito suele pasar en un día. Lo más importante es reponer líquidos poco a poco.",
+        "casa": ["Descansa y no comas sólidos por un rato.", "Toma sorbos pequeños de suero oral o agua cada pocos minutos.", "Cuando pase, empieza con comidas suaves."],
+        "medicamentos": ["Suero oral para no deshidratarte.", "No tomes medicamentos para el vómito sin consultar."],
+        "consultar_si": ["Dura más de 24 horas (más de 12 en un niño pequeño).", "No logras retener líquidos.", "Tienes signos de deshidratación."],
+        "alarma": ["Vómito con sangre o con aspecto de café molido.", "Dolor de abdomen fuerte.", "Rigidez de cuello o confusión.", "Vómito después de un golpe en la cabeza."],
+    },
+    {
+        "id": "muscular", "nombre": "Dolor de espalda o muscular", "nivel": "leve",
+        "patrones": [r"espalda", r"lumbar", r"dolor muscular", r"contractura", r"\bcuello\b", r"musculo", r"tortic"],
+        "ejemplos": ["me duele la espalda", "tengo dolor muscular"],
+        "resumen": "Los dolores musculares y de espalda suelen mejorar en unos días con movimiento suave y analgésicos simples.",
+        "casa": ["Mantente en movimiento suave: el reposo total prolongado no ayuda.", "Aplica frío las primeras 48 horas y calor después.",
+                 "Haz estiramientos suaves sin forzar.", "Cuida la postura y evita cargar peso."],
+        "medicamentos": ["Acetaminofén o ibuprofeno con comida, según la etiqueta.",
+                         "No uses ibuprofeno si tienes gastritis, úlcera o problemas de riñón, si estás embarazada o si tomas anticoagulantes; consulta antes."],
+        "consultar_si": ["Dura más de 1 semana o cada vez es peor.", "El dolor baja por una pierna o un brazo con hormigueo.", "Empezó después de una caída o un golpe fuerte."],
+        "alarma": ["Pérdida de fuerza en piernas o brazos.", "No controlas la orina o las heces.", "Dolor de espalda con fiebre alta."],
+    },
+    {
+        "id": "trauma", "nombre": "Torcedura o golpe", "nivel": "consulta_pronto",
+        "patrones": [r"torci", r"esguince", r"tobillo", r"\bgolpe\b", r"me golpe", r"me cai", r"caida", r"inflamad", r"hinchad", r"moreton", r"contusion"],
+        "ejemplos": ["me torcí el tobillo", "me caí y me duele la rodilla"],
+        "resumen": "Una torcedura o un golpe puede ser leve, pero a veces hay fractura. Conviene que te revise un profesional si duele al apoyar o mover.",
+        "casa": ["Reposo: no apoyes la zona si duele.", "Hielo envuelto en un paño, 15 a 20 minutos, varias veces al día.", "Venda elástica con presión suave.", "Mantén la zona elevada."],
+        "medicamentos": ["Acetaminofén para el dolor, según la etiqueta.", "El ibuprofeno ayuda con la inflamación; evítalo si tienes gastritis o problemas de riñón, o si estás embarazada."],
+        "consultar_si": ["No puedes apoyar o mover la zona.", "Hay hinchazón muy grande o la zona se ve deforme.", "No mejora en 3 a 5 días."],
+        "alarma": ["Un hueso que se ve o se siente deformado.", "Dedos o pie fríos, morados o sin sensibilidad.", "Herida abierta con hueso expuesto."],
+    },
+    {
+        "id": "alergia", "nombre": "Alergia o picazón", "nivel": "leve",
+        "patrones": [r"alergia", r"alergic", r"ronchas", r"urticaria", r"picazon", r"sarpullido", r"comezon", r"rinitis", r"picadura"],
+        "ejemplos": ["tengo alergia", "me salieron ronchas"],
+        "resumen": "Las reacciones alérgicas leves dan picazón, ronchas o estornudos y suelen mejorar al alejarte de lo que las causa.",
+        "casa": ["Aléjate de lo que sospechas que te la causa.", "Lava la zona con agua fría y no te rasques.", "Una compresa fría alivia la picazón."],
+        "medicamentos": ["Un antihistamínico de venta libre (como loratadina o cetirizina), según la etiqueta.", "Cremas para la picazón solo si no hay heridas abiertas."],
+        "consultar_si": ["Las ronchas duran más de unos días.", "Son muy extensas o se repiten.", "Tomaste un medicamento nuevo antes de que aparecieran."],
+        "alarma": ["Hinchazón de labios, cara, lengua o garganta.", "Dificultad para respirar o silbidos.", "Mareo o desmayo después de una picadura, un alimento o un medicamento."],
+    },
+    {
+        "id": "oido", "nombre": "Dolor de oído", "nivel": "consulta_pronto",
+        "patrones": [r"oido", r"otitis"],
+        "ejemplos": ["me duele el oído"],
+        "resumen": "El dolor de oído conviene que lo revise un profesional en uno o dos días, sobre todo en niños.",
+        "casa": ["Aplica una compresa tibia sobre la oreja.", "No introduzcas cotonetes ni objetos.", "Mantén el oído seco."],
+        "medicamentos": ["Acetaminofén para el dolor.", "No uses gotas sin que un médico revise el oído, sobre todo si hay secreción."],
+        "consultar_si": ["El dolor dura más de 1 a 2 días.", "Hay secreción, fiebre o pérdida de audición.", "Es un niño: llévalo a valoración."],
+        "alarma": ["Hinchazón o enrojecimiento detrás de la oreja.", "Mareo intenso o rigidez de cuello."],
+    },
+    {
+        "id": "herida", "nombre": "Herida o quemadura leve", "nivel": "consulta_pronto",
+        "patrones": [r"cortada", r"\bcorte\b", r"\bherida", r"raspon", r"quemadura", r"me queme", r"ampolla"],
+        "ejemplos": ["me hice una cortada", "me quemé con aceite"],
+        "resumen": "Las heridas pequeñas se tratan en casa, pero si son profundas, están sucias o son quemaduras con ampollas, conviene que las vea un profesional.",
+        "casa": ["Lava con agua y jabón durante unos minutos.", "Si sangra, presiona con una gasa limpia.", "Cubre con un apósito limpio y cámbialo a diario.",
+                 "Quemadura: enfría con agua fría (no helada) de 10 a 20 minutos; no uses hielo, pasta de dientes ni aceite, y no revientes las ampollas."],
+        "medicamentos": ["Acetaminofén para el dolor.", "Un antiséptico suave sobre la herida ya limpia."],
+        "consultar_si": ["La herida es profunda, está sucia o tiene los bordes separados.", "Hace más de 5 años que no te vacunas contra el tétanos.",
+                         "Se enrojece, se hincha, duele más o sale pus.", "La quemadura tiene ampollas grandes."],
+        "alarma": ["Sangrado que no para después de 10 minutos de presión.", "Quemadura en la cara, las manos, los genitales o muy extensa.", "Mordedura de animal: consulta el mismo día."],
+    },
+    {
+        "id": "orina", "nombre": "Molestias al orinar", "nivel": "consulta_pronto",
+        "patrones": [r"orinar", r"orina", r"urinari", r"cistitis"],
+        "ejemplos": ["me arde al orinar", "creo que tengo infección urinaria"],
+        "resumen": "El ardor al orinar o las ganas frecuentes suelen ser una infección urinaria. Necesita valoración, y casi siempre tratamiento, en las próximas 24 horas.",
+        "casa": ["Toma bastante agua.", "No aguantes las ganas de orinar.", "Evita irritantes como el alcohol y el exceso de café."],
+        "medicamentos": ["No tomes antibióticos por tu cuenta: necesitan valoración y a veces un examen de orina.", "Acetaminofén si hay molestia."],
+        "consultar_si": ["Pide una cita prioritaria en las próximas 24 horas.", "Si estás embarazada, consulta el mismo día."],
+        "alarma": ["Fiebre con dolor en la espalda baja o en los costados.", "Sangre en la orina con dolor intenso.", "Vómitos que no te dejan tomar líquidos."],
+    },
+    {
+        "id": "menstrual", "nombre": "Dolor menstrual", "nivel": "leve",
+        "patrones": [r"menstru", r"\bregla\b", r"colicos menstruales", r"periodo"],
+        "ejemplos": ["tengo dolor menstrual"],
+        "resumen": "El dolor durante la regla es frecuente y suele aliviarse con calor y analgésicos simples.",
+        "casa": ["Aplica calor en la parte baja del abdomen.", "Descansa y haz caminatas suaves.", "Toma líquidos tibios."],
+        "medicamentos": ["Ibuprofeno o acetaminofén, según la etiqueta (evita el ibuprofeno si tienes gastritis o problemas de riñón)."],
+        "consultar_si": ["El dolor no te deja hacer tus actividades.", "El sangrado es muy abundante: cambias la toalla cada hora.", "Tienes un retraso y dolor de un solo lado."],
+        "alarma": ["Sangrado muy abundante con mareo o desmayo.", "Dolor muy fuerte de un lado del abdomen y posible embarazo."],
+    },
+    {
+        "id": "mareo", "nombre": "Mareo", "nivel": "consulta_pronto",
+        "patrones": [r"mareo", r"mareada", r"mareado", r"vertigo", r"me da vueltas"],
+        "ejemplos": ["tengo mareo", "me siento mareado"],
+        "resumen": "El mareo ocasional suele ser por deshidratación, hambre o levantarse muy rápido, pero si se repite conviene que lo revise un profesional.",
+        "casa": ["Siéntate o acuéstate hasta que pase.", "Toma agua y come algo si llevas horas sin comer.", "Levántate despacio."],
+        "medicamentos": ["No tomes medicamentos para el mareo sin consultar."],
+        "consultar_si": ["Los mareos se repiten.", "Tomas medicamentos para la presión o la diabetes.", "Hay zumbido o pérdida de audición."],
+        "alarma": ["Con dolor de pecho, dificultad para respirar o palpitaciones fuertes.", "Con debilidad de un lado del cuerpo, cara caída o dificultad para hablar.", "Con desmayo o un dolor de cabeza muy fuerte."],
+    },
+    {
+        "id": "animo", "nombre": "Ansiedad, estrés o ánimo bajo", "nivel": "leve",
+        "patrones": [r"ansiedad", r"ansios", r"nervios", r"estres", r"angustia", r"triste", r"depresi", r"insomnio", r"no puedo dormir", r"panico"],
+        "ejemplos": ["tengo ansiedad", "me siento muy estresado"],
+        "resumen": "Sentirte así es más común de lo que parece, y se puede tratar. Hablarlo ya es un buen paso.",
+        "casa": ["Respira lento: inhala 4 segundos y exhala 6, durante unos minutos.", "Habla con alguien de confianza.",
+                 "Mantén horarios de sueño y comida, y muévete un poco cada día.", "Reduce el café y las bebidas energéticas."],
+        "medicamentos": ["No tomes tranquilizantes ni pastillas para dormir sin fórmula médica."],
+        "consultar_si": ["Los síntomas duran más de 2 semanas o afectan tu trabajo o tus estudios.", "Pide una cita de psicología o de medicina general."],
+        "alarma": ["Si piensas en hacerte daño o en morir, llama al 123 o ve de inmediato a urgencias.", "Ataque de pánico con dolor de pecho o falta de aire."],
+    },
+    {
+        "id": "asma", "nombre": "Asma o problemas respiratorios", "nivel": "consulta_pronto",
+        "patrones": [r"asma", r"silbido", r"sibilancia", r"problemas? respiratorio", r"respiratori"],
+        "ejemplos": ["tengo asma", "tengo problemas respiratorios"],
+        "resumen": "Los problemas respiratorios conviene que los revise un profesional, aunque parezcan leves.",
+        "casa": ["Aléjate del humo, el polvo y el aire frío.", "Siéntate derecho y respira despacio.", "Si tienes inhalador de rescate, úsalo como te lo indicó tu médico."],
+        "medicamentos": ["Usa el inhalador de rescate solo si ya te lo formularon.", "No tomes medicamentos nuevos para respirar sin consultar."],
+        "consultar_si": ["Usas el inhalador más de lo habitual.", "Tienes tos o silbidos de noche varias veces por semana."],
+        "alarma": ["Si el inhalador no te alivia o no puedes decir una frase completa, ve a urgencias de inmediato.", "Labios o cara morados."],
+    },
+    {
+        "id": "dental", "nombre": "Dolor de muela", "nivel": "consulta_pronto",
+        "patrones": [r"muela", r"diente", r"dental", r"\bencia", r"odontolog"],
+        "ejemplos": ["me duele una muela"],
+        "resumen": "El dolor de muela rara vez se resuelve solo. Pide una cita de odontología pronto.",
+        "casa": ["Enjuaga con agua tibia con un poco de sal.", "Aplica una compresa fría por fuera de la mejilla.", "Evita lo muy frío, lo muy caliente y lo dulce."],
+        "medicamentos": ["Acetaminofén o ibuprofeno para el dolor, según la etiqueta."],
+        "consultar_si": ["Pide una cita odontológica en los próximos días."],
+        "alarma": ["Hinchazón de la cara o el cuello.", "Fiebre con dolor de muela.", "Dificultad para tragar o abrir la boca."],
+    },
+    {
+        "id": "ojo", "nombre": "Molestia en los ojos", "nivel": "consulta_pronto",
+        "patrones": [r"\bojos?\b", r"conjuntivitis", r"vista borrosa"],
+        "ejemplos": ["me duele el ojo", "tengo los ojos rojos"],
+        "resumen": "Un ojo rojo o con secreción conviene que lo revise un profesional, sobre todo si usas lentes de contacto.",
+        "casa": ["Lávate las manos y no te frotes los ojos.", "Limpia con una gasa y suero fisiológico.", "No uses lentes de contacto hasta que se quite."],
+        "medicamentos": ["Lágrimas artificiales si sientes sequedad.", "No uses gotas con medicamento sin valoración."],
+        "consultar_si": ["El enrojecimiento dura más de 2 días o hay secreción abundante.", "Usas lentes de contacto."],
+        "alarma": ["Dolor intenso en el ojo.", "Pérdida o disminución de la vista.", "Un golpe o algo que entró al ojo."],
+    },
+    {
+        "id": "cronico", "nombre": "Presión alta o azúcar", "nivel": "consulta_pronto",
+        "patrones": [r"presion (alta|baja)", r"hipertension", r"azucar", r"diabetes", r"diabetic"],
+        "ejemplos": ["tengo la presión alta", "tengo diabetes"],
+        "resumen": "Si ya tienes un diagnóstico, lo importante es seguir tu tratamiento y tus controles.",
+        "casa": ["Toma tus medicamentos como te los formularon.", "Mide tu presión o tu azúcar y anota los valores.", "Cuida la sal, el azúcar y el ejercicio."],
+        "medicamentos": ["No suspendas ni cambies tus medicamentos sin hablar con tu médico."],
+        "consultar_si": ["Tus valores están por fuera de lo que te indicó tu médico.", "Pide tu control con medicina general."],
+        "alarma": ["Presión muy alta con dolor de cabeza fuerte, visión borrosa o dolor de pecho.", "Azúcar muy alta o muy baja con confusión, sudor frío o mucho sueño."],
+    },
+]
+
+ESPECIALIDAD = {"gripa": "Medicina general", "fiebre": "Medicina general", "garganta": "Otorrinolaringología", "tos": "Medicina general",
+                "cabeza": "Neurología", "estomago": "Medicina general", "vomito": "Medicina general", "muscular": "Ortopedia", "trauma": "Ortopedia",
+                "alergia": "Dermatología", "oido": "Otorrinolaringología", "herida": "Cita prioritaria", "orina": "Urología",
+                "menstrual": "Ginecología y obstetricia", "mareo": "Medicina interna", "animo": "Psicología", "asma": "Medicina interna",
+                "dental": "Odontología", "ojo": "Oftalmología", "cronico": "Medicina interna"}
+
+from .conocimiento_extra import EXTRA  # noqa: E402
+
+CONDICIONES.extend(EXTRA)
+from .conocimiento_extra2 import EXTRA2, INFO, MEDICAMENTOS  # noqa: E402,F401
+
+CONDICIONES.extend(EXTRA2)
+for _c in CONDICIONES:
+    _c.setdefault("especialidad", ESPECIALIDAD.get(_c["id"], "Medicina general"))
+
+# conversacion basica
+INTENCIONES = {
+    "saludo": [r"^(hola|buenas?|buenos dias|buenas tardes|buenas noches|hey|que tal)\b"],
+    "gracias": [r"gracias", r"muy amable"],
+    "despedida": [r"^(adios|chao|hasta luego|nos vemos)\b"],
+    "ayuda": [r"que puedes hacer", r"que haces", r"quien eres", r"como funciona", r"^ayuda$", r"que sabes"],
+    "cita": [r"\bcita\b", r"agendar", r"\bturno\b", r"a donde (voy|ir|puedo ir|me conviene)", r"donde (ir|me atienden|me conviene)"],
+    "datos_contacto": [r"telefono", r"direccion", r"donde queda", r"horario", r"como llego"],
+    "medicina_sin_sintoma": [r"que (me )?(puedo )?tomar", r"que medicina", r"que pastilla", r"que me recomiendas", r"que (me )?(tomo|doy)", r"que remedio"],
+    "dosis": [r"\bdosis\b", r"cuantas? (pastillas|gotas|tabletas|capsulas|cucharadas|mililitros|ml|mg)", r"cada cuantas horas", r"cuanto (debo |puedo )?(tomar|tomo|le doy)", r"cuantos mg", r"cuanto de (acetaminofen|ibuprofeno)"],
+    "ctx_casa": [r"que (hago|puedo hacer)", r"como (lo |la )?(trato|alivio|curo|manejo)", r"remedios? caseros?", r"que hago en casa", r"cuidados"],
+    "ctx_consultar": [r"cuando (debo |tengo que )?(consultar|ir al medico|ir al doctor|pedir cita)", r"es grave", r"debo preocuparme", r"cuando (me )?preocupo"],
+    "ctx_alarma": [r"senales? de alarma", r"cuando ir a urgencias", r"cuando (debo )?ir a urgencias", r"que (signos|sintomas) vigilar"],
+    "ctx_especialista": [r"que especialista", r"con (que|cual) (doctor|medico|especialista)", r"con quien (debo )?(ir|consultar)", r"a que doctor"],
+}
+
+# preguntas sobre los datos del sistema (se responden con cifras reales de la base)
+DATOS = {
+    "espera": [r"espera promedio", r"cuanto (se )?(demora|demoran|tardan|tarda|esperan?)", r"tiempo de espera", r"cuanto toca esperar", r"cuanto (dura|duran) la espera"],
+    "mejor_hora": [r"mejor hora", r"a que hora (hay|es mejor|conviene)", r"cuando hay menos gente", r"menos fila", r"hora con menos espera"],
+    "pico": [r"hora pico", r"cuando hay mas gente", r"mas lleno", r"dia mas lleno", r"dia con mas pacientes", r"horas? mas (concurrida|llena)"],
+    "triage": [r"\btriage\b", r"clasificacion de (la )?urgencia"],
+    "precision": [r"que tan (preciso|confiable|acertado)", r"precision", r"como calculan", r"como funciona (el|la) (pronostico|prediccion|modelo)", r"que tan bueno es el pronostico"],
+    "fuente": [r"de donde (salen|sacan|vienen) (los )?datos", r"fuente de (los )?datos", r"datos reales", r"datos abiertos", r"de donde (sale|sacan) la espera"],
+    "volumen": [r"cuantos pacientes", r"cuantas atenciones", r"cuanta gente (se )?atiende"],
+    "centros": [r"que centros", r"cuales (son )?(los )?centros", r"que hospitales", r"donde (me )?atienden"],
+}
+
+TEMAS_RAPIDOS = ["Tengo fiebre", "Gripa o tos", "Dolor de cabeza", "Dolor de estómago", "Me torcí el tobillo", "Tengo una alergia", "Dolor de garganta", "Quiero pedir una cita"]
