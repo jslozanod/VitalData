@@ -1,0 +1,52 @@
+{
+  "fecha": "2026-11-23 15:17",
+  "filas_en_hechos": 79521,
+  "consultas": [
+    {
+      "nombre": "Llegadas de una IPS en un mes",
+      "descripcion": "Lo que pide el modelo para armar una serie: una IPS y un rango de fechas en la tabla de hechos.",
+      "sin_indice_ms": 3.14,
+      "con_indice_ms": 0.56,
+      "mejora": 5.6,
+      "plan_sin_indice": [
+        "HashAggregate  (cost=2496.52..2521.33 rows=1985 width=16) (actual time=2.855..2.898 rows=565 loops=1)",
+        "  Group Key: date_trunc('hour'::text, ingreso)",
+        "  Batches: 1  Memory Usage: 177kB",
+        "  Buffers: shared hit=1090",
+        "  ->  Seq Scan on fact_atencion  (cost=0.00..2486.59 rows=1987 width=8) (actual time=1.637..2.655 rows=2113 loops=1)",
+        "        Filter: ((ingreso >= '2022-06-01 00:00:00'::timestamp without time zone) AND (ingreso < '2022-07-01 00:00:00'::timestamp without time zone) AND (ips_id = 10))"
+      ],
+      "plan_con_indice": [
+        "HashAggregate  (cost=90.41..114.55 rows=1931 width=16) (actual time=0.420..0.459 rows=565 loops=1)",
+        "  Group Key: date_trunc('hour'::text, ingreso)",
+        "  Batches: 1  Memory Usage: 177kB",
+        "  Buffers: shared hit=12",
+        "  ->  Index Only Scan using ix_fact_ips_ingreso on fact_atencion  (cost=0.42..80.74 rows=1933 width=8) (actual time=0.017..0.242 rows=2113 loops=1)",
+        "        Index Cond: ((ips_id = 10) AND (ingreso >= '2022-06-01 00:00:00'::timestamp without time zone) AND (ingreso < '2022-07-01 00:00:00'::timestamp without time zone))"
+      ]
+    },
+    {
+      "nombre": "Espera tipica por hora del dia",
+      "descripcion": "Lo que usa el asistente: espera media de una IPS a una hora, en 2022.",
+      "sin_indice_ms": 3.54,
+      "con_indice_ms": 2.44,
+      "mejora": 1.5,
+      "plan_sin_indice": [
+        "Aggregate  (cost=2680.59..2680.60 rows=1 width=8) (actual time=3.490..3.491 rows=1 loops=1)",
+        "  Buffers: shared hit=1090",
+        "  ->  Seq Scan on fact_atencion  (cost=0.00..2680.42 rows=67 width=4) (actual time=1.036..3.437 rows=1014 loops=1)",
+        "        Filter: ((ingreso >= '2022-01-01 00:00:00'::timestamp without time zone) AND (ips_id = 10) AND (EXTRACT(hour FROM ingreso) = '10'::numeric))",
+        "        Rows Removed by Filter: 78507",
+        "        Buffers: shared hit=1090"
+      ],
+      "plan_con_indice": [
+        "Aggregate  (cost=1700.27..1700.28 rows=1 width=8) (actual time=2.296..2.297 rows=1 loops=1)",
+        "  Buffers: shared hit=618",
+        "  ->  Bitmap Heap Scan on fact_atencion  (cost=342.32..1700.10 rows=67 width=4) (actual time=0.494..2.246 rows=1014 loops=1)",
+        "        Recheck Cond: ((ips_id = 10) AND (ingreso >= '2022-01-01 00:00:00'::timestamp without time zone))",
+        "        Filter: (EXTRACT(hour FROM ingreso) = '10'::numeric)",
+        "        Rows Removed by Filter: 12632"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+name: pruebas
+
+on: [push, pull_request]
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: vitaldata
+          POSTGRES_PASSWORD: clave_de_pruebas
+          POSTGRES_DB: vitaldata
+        ports: ["5433:5432"]
+        options: >-
+          --health-cmd "pg_isready -U vitaldata" --health-interval 5s --health-timeout 5s --health-retries 20
+    env:
+      DATABASE_URL: postgresql+psycopg2://vitaldata:clave_de_pruebas@localhost:5433/vitaldata
+      PYTHONPATH: src
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements-dev.txt
+      - name: Pruebas (las que necesitan datos reales se saltan solas)
+        run: pytest tests -q --cov=src/vitaldata --cov-report=term-missing

@@ -1,0 +1,43 @@
+{
+ "dag_id": "vitaldata_diario",
+ "estado": "success",
+ "inicio": "2026-11-23 20:33 UTC",
+ "tareas": [
+  {
+   "id": "verificar_fuente",
+   "estado": "success",
+   "segundos": 15.0
+  },
+  {
+   "id": "cargar_triage",
+   "estado": "success",
+   "segundos": 4.4
+  },
+  {
+   "id": "cargar_clima",
+   "estado": "success",
+   "segundos": 13.3
+  },
+  {
+   "id": "controles_de_calidad",
+   "estado": "success",
+   "segundos": 1.9
+  },
+  {
+   "id": "entrenar_y_publicar",
+   "estado": "success",
+   "segundos": 502.6
+  },
+  {
+   "id": "compuerta_del_modelo",
+   "estado": "success",
+   "segundos": 2.0
+  },
+  {
+   "id": "exportar_snapshot",
+   "estado": "success",
+   "segundos": 7.5
+  }
+ ],
+ "duracion_total_s": 546.9
+}

@@ -1,0 +1,41 @@
+........................................................................ [ 24%]
+........................................................................ [ 49%]
+........................................................................ [ 73%]
+........................................................................ [ 98%]
+.....                                                                    [100%]
+=============================== tests coverage ================================
+_______________ coverage: platform win32, python 3.14.0-final-0 _______________
+
+Name                                       Stmts   Miss  Cover
+--------------------------------------------------------------
+src\vitaldata\__init__.py                      0      0   100%
+src\vitaldata\api\__init__.py                  0      0   100%
+src\vitaldata\api\asistente.py               195     25    87%
+src\vitaldata\api\conocimiento.py             13      0   100%
+src\vitaldata\api\conocimiento_extra2.py       5      0   100%
+src\vitaldata\api\conocimiento_extra.py        4      0   100%
+src\vitaldata\api\main.py                    120      4    97%
+src\vitaldata\api\reservas.py                144      3    98%
+src\vitaldata\api\schemas.py                  76      0   100%
+src\vitaldata\api\service.py                 256     59    77%
+src\vitaldata\config.py                       25      1    96%
+src\vitaldata\db\__init__.py                   0      0   100%
+src\vitaldata\etl\__init__.py                  0      0   100%
+src\vitaldata\etl\extract.py                  65      9    86%
+src\vitaldata\etl\load.py                     61      2    97%
+src\vitaldata\etl\pipeline.py                 62      8    87%
+src\vitaldata\etl\tareas.py                   74     21    72%
+src\vitaldata\etl\validate.py                104      4    96%
+src\vitaldata\export.py                       55      5    91%
+src\vitaldata\models\__init__.py               0      0   100%
+src\vitaldata\models\backtest.py              76      1    99%
+src\vitaldata\models\baselines.py             10      0   100%
+src\vitaldata\models\cola.py                  41      1    98%
+src\vitaldata\models\data.py                  57      1    98%
+src\vitaldata\models\espera_real.py           46      2    96%
+src\vitaldata\models\forecast.py              67      2    97%
+src\vitaldata\models\publicar.py              41     26    37%
+--------------------------------------------------------------
+TOTAL                                       1597    174    89%
+Coverage JSON written to file C:\Users\juans\vitaldata-repo\docs\evidencias\cobertura.json
+293 passed in 78.00s (0:01:18)

@@ -1,0 +1,9 @@
+{'alpha': 0.0001, 'peso_reciente': 0.0, 'wape_3h_medio': 0.3197, 'wape_3h_CENTRO HOSPITAL LA ROSA': 0.2969, 'wape_3h_CS SAN VICENTE': 0.2934, 'wape_3h_HOSPITAL LOCAL CIVIL': 0.3688}
+{'alpha': 0.0001, 'peso_reciente': 0.01, 'wape_3h_medio': 0.2937, 'wape_3h_CENTRO HOSPITAL LA ROSA': 0.2737, 'wape_3h_CS SAN VICENTE': 0.2878, 'wape_3h_HOSPITAL LOCAL CIVIL': 0.3197}
+{'alpha': 0.0001, 'peso_reciente': 0.02, 'wape_3h_medio': 0.2884, 'wape_3h_CENTRO HOSPITAL LA ROSA': 0.2727, 'wape_3h_CS SAN VICENTE': 0.2873, 'wape_3h_HOSPITAL LOCAL CIVIL': 0.3052}
+{'alpha': 0.0001, 'peso_reciente': 0.04, 'wape_3h_medio': 0.2887, 'wape_3h_CENTRO HOSPITAL LA ROSA': 0.2758, 'wape_3h_CS SAN VICENTE': 0.2882, 'wape_3h_HOSPITAL LOCAL CIVIL': 0.302}
+{'alpha': 0.01, 'peso_reciente': 0.0, 'wape_3h_medio': 0.3738, 'wape_3h_CENTRO HOSPITAL LA ROSA': 0.356, 'wape_3h_CS SAN VICENTE': 0.3587, 'wape_3h_HOSPITAL LOCAL CIVIL': 0.4066}
+{'alpha': 0.01, 'peso_reciente': 0.01, 'wape_3h_medio': 0.329, 'wape_3h_CENTRO HOSPITAL LA ROSA': 0.3112, 'wape_3h_CS SAN VICENTE': 0.3359, 'wape_3h_HOSPITAL LOCAL CIVIL': 0.34}
+{'alpha': 0.01, 'peso_reciente': 0.02, 'wape_3h_medio': 0.3159, 'wape_3h_CENTRO HOSPITAL LA ROSA': 0.3, 'wape_3h_CS SAN VICENTE': 0.3308, 'wape_3h_HOSPITAL LOCAL CIVIL': 0.317}
+{'alpha': 0.01, 'peso_reciente': 0.04, 'wape_3h_medio': 0.3104, 'wape_3h_CENTRO HOSPITAL LA ROSA': 0.2956, 'wape_3h_CS SAN VICENTE': 0.3285, 'wape_3h_HOSPITAL LOCAL CIVIL': 0.3071}
+elegido: {'alpha': 0.0001, 'peso_reciente': 0.02, 'ventana_validacion': ['2022-06-13', '2022-08-07'], 'criterio': 'WAPE medio por franja de 3 horas'}

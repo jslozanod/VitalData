@@ -1,0 +1,446 @@
+ Image vitaldata-repo-api Building 
+ Image vitaldata-repo-airflow-init Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 996B 0.0s done
+#1 DONE 0.0s
+
+#2 [airflow-init internal] load build definition from Dockerfile
+#2 transferring dockerfile: 222B 0.0s done
+#2 DONE 0.1s
+
+#3 [api internal] load build definition from Dockerfile
+#3 transferring dockerfile: 296B 0.0s done
+#3 DONE 0.1s
+
+#4 [api internal] load metadata for docker.io/library/python:3.12-slim
+#4 DONE 0.1s
+
+#5 [airflow-init internal] load metadata for docker.io/apache/airflow:2.10.5-python3.12
+#5 ...
+
+#6 [api internal] load .dockerignore
+#6 transferring context: 2B done
+#6 DONE 0.0s
+
+#7 [api internal] load build context
+#7 transferring context: 212.80kB 0.0s done
+#7 DONE 0.1s
+
+#8 [api 1/6] FROM docker.io/library/python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f
+#8 resolve docker.io/library/python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f 0.0s done
+#8 DONE 0.1s
+
+#9 [api 2/6] WORKDIR /app
+#9 DONE 0.0s
+
+#10 [api 3/6] COPY requirements.txt .
+#10 DONE 0.0s
+
+#11 [api 4/6] RUN pip install --no-cache-dir -r requirements.txt
+#11 ...
+
+#12 [auth] apache/airflow:pull token for registry-1.docker.io
+#12 DONE 0.0s
+
+#5 [airflow-init internal] load metadata for docker.io/apache/airflow:2.10.5-python3.12
+#5 DONE 3.5s
+
+#11 [api 4/6] RUN pip install --no-cache-dir -r requirements.txt
+#11 2.999 Collecting pandas==2.3.3 (from -r requirements.txt (line 1))
+#11 ...
+
+#6 [airflow-init internal] load .dockerignore
+#6 transferring context: 2B done
+#6 DONE 0.0s
+
+#13 [airflow-init 1/3] FROM docker.io/apache/airflow:2.10.5-python3.12@sha256:6499a680a93463846d3a6be980e85d601dc97b0d81e82eed9ef5e5cb9da31b79
+#13 resolve docker.io/apache/airflow:2.10.5-python3.12@sha256:6499a680a93463846d3a6be980e85d601dc97b0d81e82eed9ef5e5cb9da31b79 0.0s done
+#13 CACHED
+
+#14 [airflow-init internal] load build context
+#14 transferring context: 255B done
+#14 DONE 0.0s
+
+#15 [airflow-init 2/3] COPY requirements.txt /tmp/requirements.txt
+#15 DONE 0.1s
+
+#11 [api 4/6] RUN pip install --no-cache-dir -r requirements.txt
+#11 3.260   Downloading pandas-2.3.3-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (91 kB)
+#11 4.161 Collecting numpy>=2.0 (from -r requirements.txt (line 2))
+#11 4.337   Downloading numpy-2.5.5-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (6.6 kB)
+#11 4.549 Collecting scikit-learn>=1.5 (from -r requirements.txt (line 3))
+#11 4.646   Downloading scikit_learn-1.9.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (9.3 kB)
+#11 4.753 Collecting statsmodels>=0.14 (from -r requirements.txt (line 4))
+#11 4.814   Downloading statsmodels-0.15.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (9.6 kB)
+#11 5.030 Collecting scipy>=1.13 (from -r requirements.txt (line 5))
+#11 5.096   Downloading scipy-1.18.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (62 kB)
+#11 5.608 Collecting SQLAlchemy==2.0.47 (from -r requirements.txt (line 6))
+#11 5.666   Downloading sqlalchemy-2.0.47-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (9.5 kB)
+#11 5.818 Collecting psycopg2-binary==2.9.11 (from -r requirements.txt (line 7))
+#11 5.889   Downloading psycopg2_binary-2.9.11-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (4.9 kB)
+#11 5.955 Collecting httpx==0.28.1 (from -r requirements.txt (line 8))
+#11 6.012   Downloading httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+#11 6.150 Collecting fastapi>=0.115 (from -r requirements.txt (line 9))
+#11 6.209   Downloading fastapi-0.165.0-py3-none-any.whl.metadata (27 kB)
+#11 6.317 Collecting uvicorn>=0.30 (from uvicorn[standard]>=0.30->-r requirements.txt (line 10))
+#11 6.373   Downloading uvicorn-0.54.0-py3-none-any.whl.metadata (6.6 kB)
+#11 6.568 Collecting pydantic>=2.7 (from -r requirements.txt (line 11))
+#11 6.624   Downloading pydantic-2.14.4-py3-none-any.whl.metadata (143 kB)
+#11 6.787 Collecting holidays>=0.50 (from -r requirements.txt (line 12))
+#11 6.857   Downloading holidays-0.109-py3-none-any.whl.metadata (58 kB)
+#11 6.951 Collecting joblib>=1.4 (from -r requirements.txt (line 13))
+#11 7.019   Downloading joblib-1.6.0-py3-none-any.whl.metadata (6.5 kB)
+#11 7.090 Collecting python-dateutil>=2.8.2 (from pandas==2.3.3->-r requirements.txt (line 1))
+#11 7.157   Downloading python_dateutil-4.0.0-py3-none-any.whl.metadata (7.3 kB)
+#11 7.260 Collecting pytz>=2020.1 (from pandas==2.3.3->-r requirements.txt (line 1))
+#11 7.319   Downloading pytz-2026.6-py2.py3-none-any.whl.metadata (22 kB)
+#11 7.402 Collecting tzdata>=2022.7 (from pandas==2.3.3->-r requirements.txt (line 1))
+#11 7.457   Downloading tzdata-2026.6-py2.py3-none-any.whl.metadata (1.4 kB)
+#11 7.683 Collecting greenlet>=1 (from SQLAlchemy==2.0.47->-r requirements.txt (line 6))
+#11 7.759   Downloading greenlet-3.5.6-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (3.8 kB)
+#11 7.853 Collecting typing-extensions>=4.6.0 (from SQLAlchemy==2.0.47->-r requirements.txt (line 6))
+#11 7.912   Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+#11 8.002 Collecting anyio (from httpx==0.28.1->-r requirements.txt (line 8))
+#11 8.076   Downloading anyio-4.16.0-py3-none-any.whl.metadata (4.7 kB)
+#11 8.174 Collecting certifi (from httpx==0.28.1->-r requirements.txt (line 8))
+#11 8.232   Downloading certifi-2026.11.20-py3-none-any.whl.metadata (2.5 kB)
+#11 8.307 Collecting httpcore==1.* (from httpx==0.28.1->-r requirements.txt (line 8))
+#11 8.367   Downloading httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+#11 8.448 Collecting idna (from httpx==0.28.1->-r requirements.txt (line 8))
+#11 8.513   Downloading idna-3.20-py3-none-any.whl.metadata (7.2 kB)
+#11 8.593 Collecting h11>=0.16 (from httpcore==1.*->httpx==0.28.1->-r requirements.txt (line 8))
+#11 8.651   Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+#11 8.781 Collecting narwhals>=2.0.1 (from scikit-learn>=1.5->-r requirements.txt (line 3))
+#11 8.835   Downloading narwhals-2.29.0-py3-none-any.whl.metadata (15 kB)
+#11 8.903 Collecting threadpoolctl>=3.5.0 (from scikit-learn>=1.5->-r requirements.txt (line 3))
+#11 8.959   Downloading threadpoolctl-3.8.0-py3-none-any.whl.metadata (29 kB)
+#11 9.052 Collecting patsy>=0.5.6 (from statsmodels>=0.14->-r requirements.txt (line 4))
+#11 9.123   Downloading patsy-1.0.3-py2.py3-none-any.whl.metadata (3.7 kB)
+#11 9.202 Collecting packaging>=21.3 (from statsmodels>=0.14->-r requirements.txt (line 4))
+#11 9.270   Downloading packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+#11 9.366 Collecting formulaic>=1.1.0 (from statsmodels>=0.14->-r requirements.txt (line 4))
+#11 9.427   Downloading formulaic-1.2.2-py3-none-any.whl.metadata (7.0 kB)
+#11 9.530 Collecting starlette>=1.6.0 (from fastapi>=0.115->-r requirements.txt (line 9))
+#11 9.594   Downloading starlette-1.10.0-py3-none-any.whl.metadata (6.6 kB)
+#11 9.672 Collecting typing-inspection>=0.4.2 (from fastapi>=0.115->-r requirements.txt (line 9))
+#11 9.732   Downloading typing_inspection-0.4.5-py3-none-any.whl.metadata (2.6 kB)
+#11 9.799 Collecting annotated-doc>=0.0.2 (from fastapi>=0.115->-r requirements.txt (line 9))
+#11 9.858   Downloading annotated_doc-0.0.7-py3-none-any.whl.metadata (6.4 kB)
+#11 9.939 Collecting opentelemetry-api>=1.44.0 (from fastapi>=0.115->-r requirements.txt (line 9))
+#11 10.01   Downloading opentelemetry_api-1.45.2-py3-none-any.whl.metadata (1.4 kB)
+#11 10.09 Collecting click>=7.0 (from uvicorn>=0.30->uvicorn[standard]>=0.30->-r requirements.txt (line 10))
+#11 10.15   Downloading click-8.5.1-py3-none-any.whl.metadata (2.6 kB)
+#11 10.22 Collecting annotated-types>=0.6.0 (from pydantic>=2.7->-r requirements.txt (line 11))
+#11 10.28   Downloading annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+#11 11.15 Collecting pydantic-core==2.50.5 (from pydantic>=2.7->-r requirements.txt (line 11))
+#11 11.21   Downloading pydantic_core-2.50.5-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (6.6 kB)
+#11 11.22 Collecting python-dateutil>=2.8.2 (from pandas==2.3.3->-r requirements.txt (line 1))
+#11 11.29   Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+#11 11.36 Collecting cloudpickle>=3.0 (from joblib>=1.4->-r requirements.txt (line 13))
+#11 11.43   Downloading cloudpickle-3.1.3-py3-none-any.whl.metadata (7.1 kB)
+#11 11.53 Collecting httptools>=0.8.0 (from uvicorn[standard]>=0.30->-r requirements.txt (line 10))
+#11 11.60   Downloading httptools-0.9.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (3.5 kB)
+#11 11.70 Collecting python-dotenv>=0.13 (from uvicorn[standard]>=0.30->-r requirements.txt (line 10))
+#11 11.79   Downloading python_dotenv-1.2.4-py3-none-any.whl.metadata (29 kB)
+#11 11.93 Collecting pyyaml>=5.1 (from uvicorn[standard]>=0.30->-r requirements.txt (line 10))
+#11 11.98   Downloading pyyaml-6.0.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.3 kB)
+#11 12.08 Collecting uvloop>=0.15.1 (from uvicorn[standard]>=0.30->-r requirements.txt (line 10))
+#11 12.17   Downloading uvloop-0.23.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (5.1 kB)
+#11 12.34 Collecting watchfiles>=0.20 (from uvicorn[standard]>=0.30->-r requirements.txt (line 10))
+#11 12.40   Downloading watchfiles-1.3.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.9 kB)
+#11 12.69 Collecting websockets>=13.0 (from uvicorn[standard]>=0.30->-r requirements.txt (line 10))
+#11 12.75   Downloading websockets-17.4-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (6.3 kB)
+#11 12.83 Collecting interface-meta>=1.2.0 (from formulaic>=1.1.0->statsmodels>=0.14->-r requirements.txt (line 4))
+#11 12.96   Downloading interface_meta-2.0.1-py3-none-any.whl.metadata (6.4 kB)
+#11 ...
+
+#16 [airflow-init 3/3] RUN pip install --no-cache-dir -r /tmp/requirements.txt
+#16 2.688 Collecting pandas==2.3.3 (from -r /tmp/requirements.txt (line 1))
+#16 2.903   Downloading pandas-2.3.3-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (91 kB)
+#16 3.300 Collecting numpy>=2.0 (from -r /tmp/requirements.txt (line 2))
+#16 3.357   Downloading numpy-2.5.5-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (6.6 kB)
+#16 3.497 Collecting scikit-learn>=1.5 (from -r /tmp/requirements.txt (line 3))
+#16 3.558   Downloading scikit_learn-1.9.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (9.3 kB)
+#16 3.657 Collecting statsmodels>=0.14 (from -r /tmp/requirements.txt (line 4))
+#16 3.719   Downloading statsmodels-0.15.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (9.6 kB)
+#16 3.870 Collecting scipy>=1.13 (from -r /tmp/requirements.txt (line 5))
+#16 3.930   Downloading scipy-1.18.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (62 kB)
+#16 4.331 Collecting SQLAlchemy==2.0.47 (from -r /tmp/requirements.txt (line 6))
+#16 4.390   Downloading sqlalchemy-2.0.47-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (9.5 kB)
+#16 4.539 Collecting psycopg2-binary==2.9.11 (from -r /tmp/requirements.txt (line 7))
+#16 4.602   Downloading psycopg2_binary-2.9.11-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (4.9 kB)
+#16 4.678 Collecting httpx==0.28.1 (from -r /tmp/requirements.txt (line 8))
+#16 4.748   Downloading httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+#16 4.907 Collecting fastapi>=0.115 (from -r /tmp/requirements.txt (line 9))
+#16 4.969   Downloading fastapi-0.165.0-py3-none-any.whl.metadata (27 kB)
+#16 5.078 Collecting uvicorn>=0.30 (from uvicorn[standard]>=0.30->-r /tmp/requirements.txt (line 10))
+#16 5.135   Downloading uvicorn-0.54.0-py3-none-any.whl.metadata (6.6 kB)
+#16 5.144 Requirement already satisfied: pydantic>=2.7 in /home/airflow/.local/lib/python3.12/site-packages (from -r /tmp/requirements.txt (line 11)) (2.10.6)
+#16 5.260 Collecting holidays>=0.50 (from -r /tmp/requirements.txt (line 12))
+#16 5.323   Downloading holidays-0.109-py3-none-any.whl.metadata (58 kB)
+#16 5.421 Collecting joblib>=1.4 (from -r /tmp/requirements.txt (line 13))
+#16 5.494   Downloading joblib-1.6.0-py3-none-any.whl.metadata (6.5 kB)
+#16 5.505 Requirement already satisfied: python-dateutil>=2.8.2 in /home/airflow/.local/lib/python3.12/site-packages (from pandas==2.3.3->-r /tmp/requirements.txt (line 1)) (2.9.0.post0)
+#16 5.506 Requirement already satisfied: pytz>=2020.1 in /home/airflow/.local/lib/python3.12/site-packages (from pandas==2.3.3->-r /tmp/requirements.txt (line 1)) (2025.1)
+#16 5.507 Requirement already satisfied: tzdata>=2022.7 in /home/airflow/.local/lib/python3.12/site-packages (from pandas==2.3.3->-r /tmp/requirements.txt (line 1)) (2025.1)
+#16 5.512 Requirement already satisfied: greenlet>=1 in /home/airflow/.local/lib/python3.12/site-packages (from SQLAlchemy==2.0.47->-r /tmp/requirements.txt (line 6)) (3.1.1)
+#16 5.513 Requirement already satisfied: typing-extensions>=4.6.0 in /home/airflow/.local/lib/python3.12/site-packages (from SQLAlchemy==2.0.47->-r /tmp/requirements.txt (line 6)) (4.12.2)
+#16 5.516 Requirement already satisfied: anyio in /home/airflow/.local/lib/python3.12/site-packages (from httpx==0.28.1->-r /tmp/requirements.txt (line 8)) (4.8.0)
+#16 5.516 Requirement already satisfied: certifi in /home/airflow/.local/lib/python3.12/site-packages (from httpx==0.28.1->-r /tmp/requirements.txt (line 8)) (2025.1.31)
+#16 5.517 Requirement already satisfied: httpcore==1.* in /home/airflow/.local/lib/python3.12/site-packages (from httpx==0.28.1->-r /tmp/requirements.txt (line 8)) (1.0.7)
+#16 5.518 Requirement already satisfied: idna in /home/airflow/.local/lib/python3.12/site-packages (from httpx==0.28.1->-r /tmp/requirements.txt (line 8)) (3.10)
+#16 5.527 Requirement already satisfied: h11<0.15,>=0.13 in /home/airflow/.local/lib/python3.12/site-packages (from httpcore==1.*->httpx==0.28.1->-r /tmp/requirements.txt (line 8)) (0.14.0)
+#16 5.641 Collecting narwhals>=2.0.1 (from scikit-learn>=1.5->-r /tmp/requirements.txt (line 3))
+#16 5.705   Downloading narwhals-2.29.0-py3-none-any.whl.metadata (15 kB)
+#16 5.778 Collecting threadpoolctl>=3.5.0 (from scikit-learn>=1.5->-r /tmp/requirements.txt (line 3))
+#16 5.841   Downloading threadpoolctl-3.8.0-py3-none-any.whl.metadata (29 kB)
+#16 5.933 Collecting patsy>=0.5.6 (from statsmodels>=0.14->-r /tmp/requirements.txt (line 4))
+#16 6.000   Downloading patsy-1.0.3-py2.py3-none-any.whl.metadata (3.7 kB)
+#16 6.007 Requirement already satisfied: packaging>=21.3 in /home/airflow/.local/lib/python3.12/site-packages (from statsmodels>=0.14->-r /tmp/requirements.txt (line 4)) (24.2)
+#16 6.073 Collecting formulaic>=1.1.0 (from statsmodels>=0.14->-r /tmp/requirements.txt (line 4))
+#16 6.140   Downloading formulaic-1.2.2-py3-none-any.whl.metadata (7.0 kB)
+#16 6.240 Collecting starlette>=1.6.0 (from fastapi>=0.115->-r /tmp/requirements.txt (line 9))
+#16 6.300   Downloading starlette-1.10.0-py3-none-any.whl.metadata (6.6 kB)
+#16 6.364 Collecting typing-inspection>=0.4.2 (from fastapi>=0.115->-r /tmp/requirements.txt (line 9))
+#16 6.424   Downloading typing_inspection-0.4.5-py3-none-any.whl.metadata (2.6 kB)
+#16 6.491 Collecting annotated-doc>=0.0.2 (from fastapi>=0.115->-r /tmp/requirements.txt (line 9))
+#16 6.550   Downloading annotated_doc-0.0.7-py3-none-any.whl.metadata (6.4 kB)
+#16 6.621 Collecting opentelemetry-api>=1.44.0 (from fastapi>=0.115->-r /tmp/requirements.txt (line 9))
+#16 6.682   Downloading opentelemetry_api-1.45.2-py3-none-any.whl.metadata (1.4 kB)
+#16 6.688 Requirement already satisfied: click>=7.0 in /home/airflow/.local/lib/python3.12/site-packages (from uvicorn>=0.30->uvicorn[standard]>=0.30->-r /tmp/requirements.txt (line 10)) (8.1.8)
+#16 6.691 Requirement already satisfied: annotated-types>=0.6.0 in /home/airflow/.local/lib/python3.12/site-packages (from pydantic>=2.7->-r /tmp/requirements.txt (line 11)) (0.7.0)
+#16 6.691 Requirement already satisfied: pydantic-core==2.27.2 in /home/airflow/.local/lib/python3.12/site-packages (from pydantic>=2.7->-r /tmp/requirements.txt (line 11)) (2.27.2)
+#16 6.782 Collecting cloudpickle>=3.0 (from joblib>=1.4->-r /tmp/requirements.txt (line 13))
+#16 6.844   Downloading cloudpickle-3.1.3-py3-none-any.whl.metadata (7.1 kB)
+#16 6.931 Collecting httptools>=0.8.0 (from uvicorn[standard]>=0.30->-r /tmp/requirements.txt (line 10))
+#16 6.992   Downloading httptools-0.9.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (3.5 kB)
+#16 6.997 Requirement already satisfied: python-dotenv>=0.13 in /home/airflow/.local/lib/python3.12/site-packages (from uvicorn[standard]>=0.30->-r /tmp/requirements.txt (line 10)) (1.0.1)
+#16 6.998 Requirement already satisfied: pyyaml>=5.1 in /home/airflow/.local/lib/python3.12/site-packages (from uvicorn[standard]>=0.30->-r /tmp/requirements.txt (line 10)) (6.0.2)
+#16 7.087 Collecting uvloop>=0.15.1 (from uvicorn[standard]>=0.30->-r /tmp/requirements.txt (line 10))
+#16 7.149   Downloading uvloop-0.23.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (5.1 kB)
+#16 7.277 Collecting watchfiles>=0.20 (from uvicorn[standard]>=0.30->-r /tmp/requirements.txt (line 10))
+#16 7.333   Downloading watchfiles-1.3.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.9 kB)
+#16 7.514 Collecting websockets>=13.0 (from uvicorn[standard]>=0.30->-r /tmp/requirements.txt (line 10))
+#16 7.574   Downloading websockets-17.4-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (6.3 kB)
+#16 7.589 Requirement already satisfied: sniffio>=1.1 in /home/airflow/.local/lib/python3.12/site-packages (from anyio->httpx==0.28.1->-r /tmp/requirements.txt (line 8)) (1.3.1)
+#16 7.655 Collecting interface-meta>=1.2.0 (from formulaic>=1.1.0->statsmodels>=0.14->-r /tmp/requirements.txt (line 4))
+#16 7.712   Downloading interface_meta-2.0.1-py3-none-any.whl.metadata (6.4 kB)
+#16 7.762 Requirement already satisfied: wrapt>=1.0 in /home/airflow/.local/lib/python3.12/site-packages (from formulaic>=1.1.0->statsmodels>=0.14->-r /tmp/requirements.txt (line 4)) (1.17.2)
+#16 7.792 Requirement already satisfied: six>=1.5 in /home/airflow/.local/lib/python3.12/site-packages (from python-dateutil>=2.8.2->pandas==2.3.3->-r /tmp/requirements.txt (line 1)) (1.17.0)
+#16 7.873 Collecting typing-extensions>=4.6.0 (from SQLAlchemy==2.0.47->-r /tmp/requirements.txt (line 6))
+#16 7.932   Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+#16 8.007 Downloading pandas-2.3.3-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (12.4 MB)
+#16 8.729    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.4/12.4 MB 18.8 MB/s eta 0:00:00
+#16 8.789 Downloading sqlalchemy-2.0.47-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (3.3 MB)
+#16 8.884    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.3/3.3 MB 39.1 MB/s eta 0:00:00
+#16 8.940 Downloading psycopg2_binary-2.9.11-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (4.2 MB)
+#16 9.142    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.2/4.2 MB 21.4 MB/s eta 0:00:00
+#16 9.198 Downloading httpx-0.28.1-py3-none-any.whl (73 kB)
+#16 9.264 Downloading numpy-2.5.5-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (15.7 MB)
+#16 9.959    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 15.7/15.7 MB 22.7 MB/s eta 0:00:00
+#16 10.02 Downloading scikit_learn-1.9.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (9.2 MB)
+#16 ...
+
+#11 [api 4/6] RUN pip install --no-cache-dir -r requirements.txt
+#11 13.53 Collecting wrapt>=1.0 (from formulaic>=1.1.0->statsmodels>=0.14->-r requirements.txt (line 4))
+#11 13.62   Downloading wrapt-2.5.2-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (7.6 kB)
+#11 13.72 Collecting six>=1.5 (from python-dateutil>=2.8.2->pandas==2.3.3->-r requirements.txt (line 1))
+#11 13.79   Downloading six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+#11 13.95 Downloading pandas-2.3.3-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (12.4 MB)
+#11 16.19    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.4/12.4 MB 5.8 MB/s eta 0:00:00
+#11 16.34 Downloading sqlalchemy-2.0.47-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (3.3 MB)
+#11 16.59    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.3/3.3 MB 13.8 MB/s eta 0:00:00
+#11 16.66 Downloading psycopg2_binary-2.9.11-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (4.2 MB)
+#11 17.02    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.2/4.2 MB 11.8 MB/s eta 0:00:00
+#11 17.08 Downloading httpx-0.28.1-py3-none-any.whl (73 kB)
+#11 17.17 Downloading httpcore-1.0.9-py3-none-any.whl (78 kB)
+#11 17.34 Downloading numpy-2.5.5-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (15.7 MB)
+#11 19.12    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 15.7/15.7 MB 8.8 MB/s eta 0:00:00
+#11 19.18 Downloading scikit_learn-1.9.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (9.2 MB)
+#11 20.14    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 9.2/9.2 MB 9.5 MB/s eta 0:00:00
+#11 20.22 Downloading statsmodels-0.15.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (12.0 MB)
+#11 21.42    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.0/12.0 MB 10.0 MB/s eta 0:00:00
+#11 21.49 Downloading scipy-1.18.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (35.3 MB)
+#11 ...
+
+#16 [airflow-init 3/3] RUN pip install --no-cache-dir -r /tmp/requirements.txt
+#16 10.42    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 9.2/9.2 MB 23.4 MB/s eta 0:00:00
+#16 10.49 Downloading statsmodels-0.15.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (12.0 MB)
+#16 11.00    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.0/12.0 MB 24.7 MB/s eta 0:00:00
+#16 11.06 Downloading scipy-1.18.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (35.3 MB)
+#16 12.67    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 35.3/35.3 MB 22.0 MB/s eta 0:00:00
+#16 12.72 Downloading fastapi-0.165.0-py3-none-any.whl (159 kB)
+#16 12.79 Downloading uvicorn-0.54.0-py3-none-any.whl (87 kB)
+#16 12.87 Downloading holidays-0.109-py3-none-any.whl (1.7 MB)
+#16 12.99    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.7/1.7 MB 15.1 MB/s eta 0:00:00
+#16 13.05 Downloading joblib-1.6.0-py3-none-any.whl (306 kB)
+#16 13.14 Downloading annotated_doc-0.0.7-py3-none-any.whl (5.3 kB)
+#16 13.20 Downloading cloudpickle-3.1.3-py3-none-any.whl (22 kB)
+#16 13.27 Downloading formulaic-1.2.2-py3-none-any.whl (118 kB)
+#16 13.33 Downloading httptools-0.9.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (552 kB)
+#16 13.39    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 552.8/552.8 kB 10.0 MB/s eta 0:00:00
+#16 13.45 Downloading narwhals-2.29.0-py3-none-any.whl (501 kB)
+#16 13.54 Downloading opentelemetry_api-1.45.2-py3-none-any.whl (60 kB)
+#16 13.60 Downloading patsy-1.0.3-py2.py3-none-any.whl (233 kB)
+#16 13.67 Downloading starlette-1.10.0-py3-none-any.whl (80 kB)
+#16 13.73 Downloading threadpoolctl-3.8.0-py3-none-any.whl (32 kB)
+#16 13.80 Downloading typing_inspection-0.4.5-py3-none-any.whl (14 kB)
+#16 13.86 Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+#16 13.93 Downloading uvloop-0.23.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (4.5 MB)
+#16 14.18    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.5/4.5 MB 20.2 MB/s eta 0:00:00
+#16 14.23 Downloading watchfiles-1.3.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (458 kB)
+#16 14.31 Downloading websockets-17.4-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (226 kB)
+#16 14.39 Downloading interface_meta-2.0.1-py3-none-any.whl (15 kB)
+#16 15.50 Installing collected packages: websockets, uvloop, uvicorn, typing-extensions, threadpoolctl, psycopg2-binary, numpy, narwhals, interface-meta, httptools, cloudpickle, annotated-doc, typing-inspection, SQLAlchemy, scipy, patsy, pandas, opentelemetry-api, joblib, holidays, watchfiles, starlette, scikit-learn, httpx, formulaic, statsmodels, fastapi
+#16 15.86   Attempting uninstall: typing-extensions
+#16 15.88     Found existing installation: typing_extensions 4.12.2
+#16 15.88     Uninstalling typing_extensions-4.12.2:
+#16 18.16       Successfully uninstalled typing_extensions-4.12.2
+#16 18.20   Attempting uninstall: psycopg2-binary
+#16 18.21     Found existing installation: psycopg2-binary 2.9.10
+#16 18.22     Uninstalling psycopg2-binary-2.9.10:
+#16 18.28       Successfully uninstalled psycopg2-binary-2.9.10
+#16 18.39   Attempting uninstall: numpy
+#16 18.41     Found existing installation: numpy 1.26.4
+#16 18.60     Uninstalling numpy-1.26.4:
+#16 19.50       Successfully uninstalled numpy-1.26.4
+#16 ...
+
+#11 [api 4/6] RUN pip install --no-cache-dir -r requirements.txt
+#11 24.96    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 35.3/35.3 MB 10.2 MB/s eta 0:00:00
+#11 25.02 Downloading fastapi-0.165.0-py3-none-any.whl (159 kB)
+#11 25.10 Downloading uvicorn-0.54.0-py3-none-any.whl (87 kB)
+#11 25.18 Downloading pydantic-2.14.4-py3-none-any.whl (494 kB)
+#11 25.28 Downloading pydantic_core-2.50.5-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (2.3 MB)
+#11 25.51    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.3/2.3 MB 9.6 MB/s eta 0:00:00
+#11 25.58 Downloading holidays-0.109-py3-none-any.whl (1.7 MB)
+#11 25.76    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.7/1.7 MB 8.9 MB/s eta 0:00:00
+#11 25.83 Downloading joblib-1.6.0-py3-none-any.whl (306 kB)
+#11 25.92 Downloading annotated_doc-0.0.7-py3-none-any.whl (5.3 kB)
+#11 26.00 Downloading annotated_types-0.8.0-py3-none-any.whl (13 kB)
+#11 26.06 Downloading anyio-4.16.0-py3-none-any.whl (134 kB)
+#11 26.13 Downloading click-8.5.1-py3-none-any.whl (126 kB)
+#11 26.21 Downloading cloudpickle-3.1.3-py3-none-any.whl (22 kB)
+#11 26.28 Downloading formulaic-1.2.2-py3-none-any.whl (118 kB)
+#11 26.36 Downloading greenlet-3.5.6-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (621 kB)
+#11 26.42    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 621.4/621.4 kB 9.5 MB/s eta 0:00:00
+#11 26.49 Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+#11 26.56 Downloading httptools-0.9.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (552 kB)
+#11 26.62    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 552.8/552.8 kB 10.1 MB/s eta 0:00:00
+#11 26.71 Downloading idna-3.20-py3-none-any.whl (69 kB)
+#11 26.78 Downloading narwhals-2.29.0-py3-none-any.whl (501 kB)
+#11 26.88 Downloading opentelemetry_api-1.45.2-py3-none-any.whl (60 kB)
+#11 26.95 Downloading packaging-26.3-py3-none-any.whl (129 kB)
+#11 27.03 Downloading patsy-1.0.3-py2.py3-none-any.whl (233 kB)
+#11 27.10 Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+#11 27.18 Downloading python_dotenv-1.2.4-py3-none-any.whl (23 kB)
+#11 27.24 Downloading pytz-2026.6-py2.py3-none-any.whl (506 kB)
+#11 27.34 Downloading pyyaml-6.0.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (849 kB)
+#11 27.43    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 849.2/849.2 kB 9.0 MB/s eta 0:00:00
+#11 27.49 Downloading starlette-1.10.0-py3-none-any.whl (80 kB)
+#11 27.55 Downloading threadpoolctl-3.8.0-py3-none-any.whl (32 kB)
+#11 27.61 Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+#11 27.68 Downloading typing_inspection-0.4.5-py3-none-any.whl (14 kB)
+#11 27.74 Downloading tzdata-2026.6-py2.py3-none-any.whl (348 kB)
+#11 27.82 Downloading uvloop-0.23.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (4.5 MB)
+#11 28.23    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.5/4.5 MB 11.0 MB/s eta 0:00:00
+#11 28.29 Downloading watchfiles-1.3.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (458 kB)
+#11 28.38 Downloading websockets-17.4-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (226 kB)
+#11 28.45 Downloading certifi-2026.11.20-py3-none-any.whl (127 kB)
+#11 28.52 Downloading interface_meta-2.0.1-py3-none-any.whl (15 kB)
+#11 28.59 Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
+#11 28.65 Downloading wrapt-2.5.2-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (250 kB)
+#11 28.93 Installing collected packages: pytz, wrapt, websockets, uvloop, tzdata, typing-extensions, threadpoolctl, six, pyyaml, python-dotenv, psycopg2-binary, packaging, numpy, narwhals, interface-meta, idna, httptools, h11, greenlet, cloudpickle, click, certifi, annotated-types, annotated-doc, uvicorn, typing-inspection, SQLAlchemy, scipy, python-dateutil, pydantic-core, patsy, opentelemetry-api, joblib, httpcore, anyio, watchfiles, starlette, scikit-learn, pydantic, pandas, httpx, holidays, formulaic, fastapi, statsmodels
+#11 ...
+
+#16 [airflow-init 3/3] RUN pip install --no-cache-dir -r /tmp/requirements.txt
+#16 22.37   Attempting uninstall: SQLAlchemy
+#16 22.38     Found existing installation: SQLAlchemy 1.4.54
+#16 22.42     Uninstalling SQLAlchemy-1.4.54:
+#16 22.57       Successfully uninstalled SQLAlchemy-1.4.54
+#16 28.95   Attempting uninstall: pandas
+#16 28.96     Found existing installation: pandas 2.1.4
+#16 29.38     Uninstalling pandas-2.1.4:
+#16 30.65       Successfully uninstalled pandas-2.1.4
+#16 35.98   Attempting uninstall: opentelemetry-api
+#16 35.99     Found existing installation: opentelemetry-api 1.27.0
+#16 36.01     Uninstalling opentelemetry-api-1.27.0:
+#16 36.05       Successfully uninstalled opentelemetry-api-1.27.0
+#16 41.44   Attempting uninstall: httpx
+#16 41.46     Found existing installation: httpx 0.27.0
+#16 41.47     Uninstalling httpx-0.27.0:
+#16 41.50       Successfully uninstalled httpx-0.27.0
+#16 45.58 ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+#16 45.58 opentelemetry-semantic-conventions 0.48b0 requires opentelemetry-api==1.27.0, but you have opentelemetry-api 1.45.2 which is incompatible.
+#16 45.58 marshmallow-sqlalchemy 0.28.2 requires SQLAlchemy<2.0,>=1.3.0, but you have sqlalchemy 2.0.47 which is incompatible.
+#16 45.58 flask-appbuilder 4.5.2 requires SQLAlchemy<1.5, but you have sqlalchemy 2.0.47 which is incompatible.
+#16 45.58 apache-airflow-providers-google 12.0.0 requires pandas<2.2,>=2.1.2; python_version >= "3.9", but you have pandas 2.3.3 which is incompatible.
+#16 45.58 apache-airflow 2.10.5 requires sqlalchemy<2.0,>=1.4.36, but you have sqlalchemy 2.0.47 which is incompatible.
+#16 45.58 opentelemetry-sdk 1.27.0 requires opentelemetry-api==1.27.0, but you have opentelemetry-api 1.45.2 which is incompatible.
+#16 45.58 apache-airflow-providers-snowflake 6.0.0 requires pandas<2.2,>=2.1.2; python_version >= "3.9", but you have pandas 2.3.3 which is incompatible.
+#16 45.58 Successfully installed SQLAlchemy-2.0.47 annotated-doc-0.0.7 cloudpickle-3.1.3 fastapi-0.165.0 formulaic-1.2.2 holidays-0.109 httptools-0.9.0 httpx-0.28.1 interface-meta-2.0.1 joblib-1.6.0 narwhals-2.29.0 numpy-2.5.5 opentelemetry-api-1.45.2 pandas-2.3.3 patsy-1.0.3 psycopg2-binary-2.9.11 scikit-learn-1.9.1 scipy-1.18.1 starlette-1.10.0 statsmodels-0.15.0 threadpoolctl-3.8.0 typing-extensions-4.16.0 typing-inspection-0.4.5 uvicorn-0.54.0 uvloop-0.23.0 watchfiles-1.3.0 websockets-17.4
+#16 46.16 
+#16 46.16 [notice] A new release of pip is available: 25.0 -> 26.3
+#16 46.16 [notice] To update, run: pip install --upgrade pip
+#16 DONE 47.8s
+
+#11 [api 4/6] RUN pip install --no-cache-dir -r requirements.txt
+#11 ...
+
+#17 [airflow-init] exporting to image
+#17 exporting layers
+#17 ...
+
+#11 [api 4/6] RUN pip install --no-cache-dir -r requirements.txt
+#11 54.50 Successfully installed SQLAlchemy-2.0.47 annotated-doc-0.0.7 annotated-types-0.8.0 anyio-4.16.0 certifi-2026.11.20 click-8.5.1 cloudpickle-3.1.3 fastapi-0.165.0 formulaic-1.2.2 greenlet-3.5.6 h11-0.16.0 holidays-0.109 httpcore-1.0.9 httptools-0.9.0 httpx-0.28.1 idna-3.20 interface-meta-2.0.1 joblib-1.6.0 narwhals-2.29.0 numpy-2.5.5 opentelemetry-api-1.45.2 packaging-26.3 pandas-2.3.3 patsy-1.0.3 psycopg2-binary-2.9.11 pydantic-2.14.4 pydantic-core-2.50.5 python-dateutil-2.9.0.post0 python-dotenv-1.2.4 pytz-2026.6 pyyaml-6.0.4 scikit-learn-1.9.1 scipy-1.18.1 six-1.17.0 starlette-1.10.0 statsmodels-0.15.0 threadpoolctl-3.8.0 typing-extensions-4.16.0 typing-inspection-0.4.5 tzdata-2026.6 uvicorn-0.54.0 uvloop-0.23.0 watchfiles-1.3.0 websockets-17.4 wrapt-2.5.2
+#11 54.50 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#11 54.76 
+#11 54.76 [notice] A new release of pip is available: 25.0.1 -> 26.3
+#11 54.76 [notice] To update, run: pip install --upgrade pip
+#11 DONE 55.2s
+
+#18 [api 5/6] COPY src ./src
+#18 DONE 0.2s
+
+#17 [airflow-init] exporting to image
+#17 ...
+
+#19 [api 6/6] COPY web ./web
+#19 DONE 0.0s
+
+#20 [api] exporting to image
+#20 ...
+
+#17 [airflow-init] exporting to image
+#17 exporting layers 18.2s done
+#17 exporting manifest sha256:e1a027eb3a6b4e6e070922db9610e9e4a0f30c0f21012f4730f19ba653eb3a61 0.0s done
+#17 exporting config sha256:098dfefca042b430de9642f23a1db990b7feb0a8dba692eee2c0088290ae8e5b done
+#17 exporting attestation manifest sha256:3e8ca2d7bf6e24412457f576f0c65a2b662cfe31c90a866dc9408e96979920f3 0.0s done
+#17 exporting manifest list sha256:9cee9ffb4237be4242a1ae8deb496fbff7178264f1675cda4af04fed8e05bd10 0.0s done
+#17 naming to docker.io/library/vitaldata-repo-airflow-init:latest done
+#17 unpacking to docker.io/library/vitaldata-repo-airflow-init:latest
+#17 unpacking to docker.io/library/vitaldata-repo-airflow-init:latest 4.1s done
+#17 DONE 22.4s
+
+#20 [api] exporting to image
+#20 ...
+
+#21 [airflow-init] resolving provenance for metadata file
+#21 DONE 0.0s
+
+#20 [api] exporting to image
+#20 exporting layers 19.1s done
+#20 exporting manifest sha256:f89db0c805ad86034b1a4c133a94ff95bbe6202cad72308610ecf78f45a3d6e8 0.0s done
+#20 exporting config sha256:879e06c4328db1594ab6993993ff0d1b0825a816354658029278ade50b84b487 0.0s done
+#20 exporting attestation manifest sha256:72d930699e703711f1d3cb28e0c8eddb8f32d15a4ede9ab9f807e68e2581ae43 0.0s done
+#20 exporting manifest list sha256:3ec5a09298f4c5c6918a9c223f32852242b7efeb713780aa6f4b1dd61a0c6ff8
+#20 exporting manifest list sha256:3ec5a09298f4c5c6918a9c223f32852242b7efeb713780aa6f4b1dd61a0c6ff8 0.0s done
+#20 naming to docker.io/library/vitaldata-repo-api:latest done
+#20 unpacking to docker.io/library/vitaldata-repo-api:latest
+#20 unpacking to docker.io/library/vitaldata-repo-api:latest 4.8s done
+#20 DONE 24.1s
+
+#22 [api] resolving provenance for metadata file
+#22 DONE 0.0s
+ Image vitaldata-repo-airflow-init Built 
+ Image vitaldata-repo-api Built 

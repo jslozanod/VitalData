@@ -1,0 +1,25 @@
+{
+  "fecha": "2026-11-23 15:17",
+  "peticiones": 240,
+  "mediana_ms": 29.2,
+  "p95_ms": 68.1,
+  "por_ruta": {
+    "/api/resumen": {
+      "mediana_ms": 59.9,
+      "p95_ms": 75.3
+    },
+    "/api/pronostico": {
+      "mediana_ms": 8.3,
+      "p95_ms": 9.2
+    },
+    "/api/personal": {
+      "mediana_ms": 8.6,
+      "p95_ms": 9.2
+    },
+    "/api/orientar": {
+      "mediana_ms": 50.3,
+      "p95_ms": 53.9
+    }
+  },
+  "nota": "Medido con el cliente de pruebas de FastAPI contra PostgreSQL local; sin red de por medio."
+}
